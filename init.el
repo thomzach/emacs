@@ -572,7 +572,6 @@ isn't there and triggers an error"
 
 (require 'zt-themes)
 (require 'zt-lsp)
-;; (require 'zt-boon)
 (require 'zt-org)
 (require 'zt-minibuffer)
 (require 'zt-completion)
