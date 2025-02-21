@@ -580,6 +580,7 @@ isn't there and triggers an error"
 (require 'zt-editing)
 (require 'zt-git)
 (require 'zt-custom-commands)
+(require 'zt-display-buffer-alist)
 
 ;; (add-hook 'occur-hook
 ;;           '(lambda ()

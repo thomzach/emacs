@@ -1,0 +1,56 @@
+(defun zt-select-window (window)
+  (select-window window))
+
+(setq display-buffer-alist
+      '(
+
+        ;; The added space is for didactic purposes
+
+        ;; Each entry in this list has this anatomy:
+
+        ;; ( BUFFER-MATCHING-RULE
+        ;;   LIST-OF-DISPLAY-BUFFER-FUNCTIONS
+        ;;   OPTIONAL-PARAMETERS)
+
+        ;; Match a buffer whose name is "*Occur*".  We have to escape
+        ;; the asterisks to match them literally and not as a special
+        ;; regular expression character.
+        ("\\*Occur\\*"
+         ;; If a buffer with the matching major-mode exists in some
+         ;; window, then use that one.  Otherwise, display the buffer
+         ;; below the current window.
+         (display-buffer-reuse-mode-window display-buffer-below-selected)
+         ;; Then we have the parameters...
+         (dedicated . t)
+         (window-height . fit-window-to-buffer)
+         (body-function . zt-select-window))
+
+        ))
+
+;; If you want `switch-to-buffer' and related to respect those rules
+;; (I personally do not want this, because if I am switching to a
+;; specific buffer in the current window, I probably have a good
+;; reason for it):
+;; (setq switch-to-buffer-obey-display-actions t)
+
+;; If you are in a window that is dedicated to its buffer and try to
+;; `switch-to-buffer' there, tell Emacs to pop a new window instead of
+;; using the current one:
+(setq switch-to-buffer-in-dedicated-window 'pop)
+
+;; Other relevant variables which control when Emacs splits the frame
+;; vertically or horizontally, with some sample values (do `M-x
+;; describe-variable' and search for those variables to learn more
+;; about them):
+;; (setq split-height-threshold 80)
+;; (setq split-width-threshold 125)
+
+;; Evaluate these to get to the relevant entries in the manual (NOTE
+;; that this is advanced stuff):
+;; (info "(elisp) Displaying Buffers")
+;; (info "(elisp) Buffer Display Action Functions")
+;; (info "(elisp) Buffer Display Action Alists")
+;; (info "(elisp) Window Parameters")
+
+
+(provide 'zt-display-buffer-alist)
