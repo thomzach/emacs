@@ -572,7 +572,6 @@ isn't there and triggers an error"
 
 (require 'zt-themes)
 (require 'zt-lsp)
-;; (require 'zt-boon)
 (require 'zt-org)
 (require 'zt-minibuffer)
 (require 'zt-completion)
@@ -580,6 +579,7 @@ isn't there and triggers an error"
 (require 'zt-editing)
 (require 'zt-git)
 (require 'zt-custom-commands)
+(require 'zt-display-buffer-alist)
 
 ;; (add-hook 'occur-hook
 ;;           '(lambda ()
