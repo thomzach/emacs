@@ -73,4 +73,5 @@
   (add-hook 'eshell-mode-hook #'capf-autosuggest-mode)
   )
 
+(global-set-key [remap dabbrev-expand] 'hippie-expand)
 (provide 'zt-completion)
