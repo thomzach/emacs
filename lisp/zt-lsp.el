@@ -57,5 +57,10 @@
          :stopAtEntry t
          :externalConsole nil)))
 
+(defun zt/lsp-format-on-save ()
+  (when (bound-and-true-p lsp-mode)
+    (lsp-format-buffer)))
+
+(add-hook 'before-save-hook #'zt/lsp-format-on-save)
 
 (provide 'zt-lsp)
