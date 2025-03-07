@@ -1,21 +1,15 @@
-(defun zephyr-term ()
-  "Opens ttyACM0 for zephyr terminal"
+(defun zt-serial-term ()
+  "Prompt for a serial device and open a terminal with 115200 baud rate.
+If the terminal buffer already exists, switch to it instead of creating a new one."
   (interactive)
-(if (get-buffer buffer-name)
-      ;; If the buffer exists, switch to it
-      (switch-to-buffer buffer-name)
-    ;; Otherwise, display a message
-    (message "Buffer %s does not exist" buffer-name))
-  (serial-term "/dev/ttyACM0" 115200 'term-line-mode)
-  )
-
-(defun zephyr-term (buffer-name)
-  "Open a buffer with BUFFER-NAME if it exists, otherwise display a message."
-  (if (get-buffer buffer-name)
-      ;; If the buffer exists, switch to it
-      (switch-to-buffer buffer-name)
-    ;; Otherwise, display a message
-    (message "Buffer %s does not exist" buffer-name)))
+  (let* ((default-device "/dev/ttyACM0")
+         (serial-device (read-string (format "Enter serial device (%s): " default-device)
+                                     nil nil default-device))
+         (buffer-name (format "%s" serial-device)))
+    (if (get-buffer buffer-name)
+        (switch-to-buffer buffer-name)
+      (serial-term serial-device 115200)
+      (rename-buffer buffer-name t))))
 
 (use-package vterm)
 (use-package multi-vterm)
