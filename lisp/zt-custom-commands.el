@@ -25,11 +25,7 @@ Uses `current-date-time-format' for the formatting the date/time."
 (global-set-key "\C-c\C-t" 'insert-current-time)
 
 
-
-
-
-
-(defun zt/my-open-init-file ()
+(defun zt/open-init-file ()
   "Open the init file."
   (interactive)
   (find-file user-init-file))
