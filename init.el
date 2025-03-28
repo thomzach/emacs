@@ -535,16 +535,16 @@ isn't there and triggers an error"
 )
 
 ;; Sample executable configuration
-(use-package plantuml-mode
-  :init
-  (setq plantuml-executable-path "/usr/bin/plantuml")
-  (setq plantuml-default-exec-mode 'executable)
-  ;; Enable plantuml-mode for PlantUML files
-  (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
-  (add-to-list
-  'org-src-lang-modes '("plantuml" . plantuml))
-  (setq org-plantuml-exec-mode 'plantuml)
-  )
+;; (use-package plantuml-mode
+;;   :init
+;;   (setq plantuml-executable-path "/usr/bin/plantuml")
+;;   (setq plantuml-default-exec-mode 'executable)
+;;   ;; Enable plantuml-mode for PlantUML files
+;;   (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+;;   (add-to-list
+;;   'org-src-lang-modes '("plantuml" . plantuml))
+;;   (setq org-plantuml-exec-mode 'plantuml)
+;;   )
 
 
 (use-package ace-window
