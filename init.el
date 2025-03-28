@@ -452,19 +452,19 @@
   (venv-initialize-eshell)
   )
 
-(use-package elfeed
-  :config
-  (setq elfeed-db-directory (expand-file-name "elfeed" user-emacs-directory)
-        elfeed-show-entry-switch 'display-buffer)
-  (define-key elfeed-show-mode-map (kbd "n") 'meow-next)
-  :bind
-  ("C-x w" . elfeed ))
+;; (use-package elfeed
+;;   :config
+;;   (setq elfeed-db-directory (expand-file-name "elfeed" user-emacs-directory)
+;;         elfeed-show-entry-switch 'display-buffer)
+;;   (define-key elfeed-show-mode-map (kbd "n") 'meow-next)
+;;   :bind
+;;   ("C-x w" . elfeed ))
 
-(use-package elfeed-org
-  :config
-  (elfeed-org)
-  (setq rmh-elfeed-org-files (list (expand-file-name "elfeed.org" user-emacs-directory)))
-  )
+;; (use-package elfeed-org
+;;   :config
+;;   (elfeed-org)
+;;   (setq rmh-elfeed-org-files (list (expand-file-name "elfeed.org" user-emacs-directory)))
+;;   )
 
 
 ;; Consult users will also want the embark-consult package.
