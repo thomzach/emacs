@@ -3,7 +3,9 @@
   ;; Optional customizations
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  ;; (corfu-auto t)                 ;; Enable auto completion
+  (corfu-auto t)                 ;; Enable auto completion
+  (corfu-auto-delay 0.5)
+  (corfu-quit-no-match 'separator) ;; or t
   ;; (corfu-separator ?\s)          ;; Orderless field separator
   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
   ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
@@ -52,9 +54,9 @@
   ;;(add-to-list 'completion-at-point-functions #'cape-tex)
   ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
   ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
-  ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+  (add-to-list 'completion-at-point-functions #'cape-abbrev)
   ;;(add-to-list 'completion-at-point-functions #'cape-dict)
-  ;;(add-to-list 'completion-at-point-functions #'cape-line)
+  (add-to-list 'completion-at-point-functions #'cape-line)
   )
 
 
@@ -73,4 +75,5 @@
   (add-hook 'eshell-mode-hook #'capf-autosuggest-mode)
   )
 
+;; (global-set-key [remap dabbrev-expand] 'hippie-expand)
 (provide 'zt-completion)
