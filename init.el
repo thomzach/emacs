@@ -268,7 +268,7 @@
   (setq browse-url-browser-function 'browse-url-generic
         browse-url-generic-program (if (string-match-p "Windows" (getenv "PATH"))
                                        "/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
-                                     "firefox"))
+                                     "thorium-browser"))
   )
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
