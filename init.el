@@ -34,7 +34,20 @@
   (savehist-mode 1)
   (save-place-mode 1)
   (winner-mode)  
-)
+  )
+
+;;; COMPILATION
+(use-package compile
+  :ensure nil
+  :hook
+  (;; Not ideal, but I do not want this poluting the modeline
+   (compilation-start . (lambda () (setq compilation-in-progress nil))))
+  :custom
+  (compilation-always-kill t)
+  (compilation-scroll-output t)
+  (ansi-color-for-compilation-mode t)
+  :config
+  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter))
 
 (use-package auto-compile
   :config (auto-compile-on-load-mode))
