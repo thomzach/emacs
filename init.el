@@ -1,31 +1,25 @@
-(setq native-comp-speed 3)
-(setq inhibit-startup-message t)
-(setq visible-bell t)
-(setq native-comp-async-report-warnings-errors nil)
-
-(scroll-bar-mode -1)        ; Disable visible scrollbar
-(tool-bar-mode -1)          ; Disable the toolbar
-(tooltip-mode -1)           ; Disable tooltips
-(set-fringe-mode 10)        ; Give some breathing room
-(menu-bar-mode -1)            ; Disable the menu bar
-(global-auto-revert-mode 1)
-
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-;; Use straight.el for use-package expressions
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
+;; Initialize package sources
+(use-package emacs
+  :ensure nil
+  :init
+  ;; TAB cycle if there are only few candidates
+  (setq completion-cycle-threshold 3)
+  (setq cursor-type 'bar)
+  (setq tab-always-indent 'complete)
+  :bind
+  (("M-o" . other-window)
+   ("M-j" . duplicate-dwim)
+   ("<f5>" . compile)
+   ;; ("M-g r" . recentf)
+   ;; ("M-s g" . grep)
+   ;; ("M-s f" . find-name-dired)
+   ;; ("C-x C-b" . ibuffer)
+   ;; ("RET" . newline-and-indent)
+   ;; ("C-z" . nil)
+   ("C-x C-z" . nil)
+   ("C-x C-k RET" . nil)
+  )
+)
 
 (use-package auto-compile
   :config (auto-compile-on-load-mode))
@@ -44,42 +38,15 @@
 
 (set-face-attribute 'default nil :font "Iosevka NF" :height 200)
 
-;; Make ESC quit prompts
-;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-;; Initialize package sources
-(require 'package)
-
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")
-                         '("nongnu" . "https://elpa.nongnu.org/nongnu/")
-			             ("melpa-stable" . "https://stable.melpa.org/packages/")
-			             ))
-
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-;; (require 'use-package)
-
 (use-package no-littering)
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 (setq make-backup-files nil)
-
 
 (use-package which-key
   :init (which-key-mode)
   :diminish which-key-mode
   :config
   (setq which-key-idle-delay 0.3))
-
-
-(global-set-key (kbd "<f5>") 'compile)
 
 (use-package undo-fu)
 
@@ -353,35 +320,6 @@
 
 
 ;; A few more useful configurations...
-(use-package emacs
-  :ensure nil
-  :init
-  ;; TAB cycle if there are only few candidates
-  (setq completion-cycle-threshold 3)
-  (setq cursor-type 'bar)
-  (global-set-key (kbd "M-o") 'other-window)
-
-  ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
-  ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
-  ;; (setq read-extended-command-predicate
-  ;;       #'command-completion-default-include-p)
-
-  ;; Enable indentation+completion using the TAB key.
-  ;; `completion-at-point' is often bound to M-TAB.
-  (setq tab-always-indent 'complete)
-  :bind
-  (("M-o" . other-window)
-   ("M-j" . duplicate-dwim)
-   ;; ("M-g r" . recentf)
-   ;; ("M-s g" . grep)
-   ;; ("M-s f" . find-name-dired)
-   ;; ("C-x C-b" . ibuffer)
-   ;; ("RET" . newline-and-indent)
-   ;; ("C-z" . nil)
-   ("C-x C-z" . nil)
-   ("C-x C-k RET" . nil)
-  )
-)
 (defun zt-toggle-window-dedication ()
   "Toggles window dedication in the selected window."
   (interactive)
