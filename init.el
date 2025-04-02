@@ -354,6 +354,7 @@
 
 ;; A few more useful configurations...
 (use-package emacs
+  :ensure nil
   :init
   ;; TAB cycle if there are only few candidates
   (setq completion-cycle-threshold 3)
@@ -367,8 +368,20 @@
 
   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
-  (setq tab-always-indent 'complete))
-
+  (setq tab-always-indent 'complete)
+  :bind
+  (("M-o" . other-window)
+   ("M-j" . duplicate-dwim)
+   ;; ("M-g r" . recentf)
+   ;; ("M-s g" . grep)
+   ;; ("M-s f" . find-name-dired)
+   ;; ("C-x C-b" . ibuffer)
+   ;; ("RET" . newline-and-indent)
+   ;; ("C-z" . nil)
+   ("C-x C-z" . nil)
+   ("C-x C-k RET" . nil)
+  )
+)
 (defun zt-toggle-window-dedication ()
   "Toggles window dedication in the selected window."
   (interactive)
