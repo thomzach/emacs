@@ -18,7 +18,22 @@
    ;; ("C-z" . nil)
    ("C-x C-z" . nil)
    ("C-x C-k RET" . nil)
-  )
+   )
+  :custom
+  (completion-ignore-case t)
+  (delete-by-moving-to-trash t)
+  (ispell-dictionary "en_US")
+  (create-lockfiles nil)   ; No backup files
+  (make-backup-files nil)  ; No backup files
+  (backup-inhibited t)     ; No backup files
+  (xref-search-program 'ripgrep)
+  (grep-command "rg -nS --no-heading ")
+  :config
+  (toggle-frame-maximized)
+  (select-frame-set-input-focus (selected-frame))
+  (savehist-mode 1)
+  (save-place-mode 1)
+  (winner-mode)  
 )
 
 (use-package auto-compile
@@ -27,7 +42,6 @@
 
 ;; Revert Dired and other buffers
 (setq global-auto-revert-non-file-buffers t)
-(setq create-lockfiles nil)
 (setq dired-dwim-target t)
 (setq custom-file "~/.emacs.d/custom-file.el")
 (load-file custom-file)
@@ -159,13 +173,8 @@
   ;;(add-hook 'pdf-view-mode-hook (lambda () (blink-cursor-mode -1)))
   (setq-default pdf-view-display-size 'fit-page)
   )
+
 (blink-cursor-mode -1)
-
-(use-package savehist
-  :init
-  (savehist-mode))
-
-
 (setq scroll-margin 5)
 (setq scroll-conservatively 100)
 
@@ -183,12 +192,6 @@
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
   )
-
-
-;; (use-package idle-highlight-mode
-;;   :config (setq idle-highlight-idle-time 0.4)
-;;   (global-idle-highlight-mode)
-;;   )
 
 (add-to-list 'auto-mode-alist '("\\.dsc" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.inf" . conf-mode))
@@ -275,20 +278,7 @@
 (use-package nix-mode
   :mode "\\.nix\\'")
 
-;; (use-package perfect-margin
-;;   :config
-;;   (setq perfect-margin-visible-width 128)
-;;   (perfect-margin-mode 1)
-;;   )
 
-(winner-mode)
-
-;;(use-package sticky-shell
-;;:config
-;;(sticky-shell-global-mode)
-;;)
-;;
-               ;;;;;;Vertico 
 
 (use-package savehist
   :init
@@ -403,82 +393,14 @@
   (venv-initialize-eshell)
   )
 
-;; (use-package elfeed
-;;   :config
-;;   (setq elfeed-db-directory (expand-file-name "elfeed" user-emacs-directory)
-;;         elfeed-show-entry-switch 'display-buffer)
-;;   (define-key elfeed-show-mode-map (kbd "n") 'meow-next)
-;;   :bind
-;;   ("C-x w" . elfeed ))
-
-;; (use-package elfeed-org
-;;   :config
-;;   (elfeed-org)
-;;   (setq rmh-elfeed-org-files (list (expand-file-name "elfeed.org" user-emacs-directory)))
-;;   )
-
-
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
   :ensure t ; only need to install it, embark loads it after consult if found
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-(use-package dimmer
-  :init
-  (dimmer-mode -1))
-
-(use-package focus
-  )
-
-(defvar ediff-do-hexl-diff nil
-  "variable used to store trigger for doing diff in hexl-mode")
-(defadvice ediff-files-internal (around ediff-files-internal-for-binary-files activate)
-  "catch the condition when the binary files differ
-
-the reason for catching the error out here (when re-thrown from the inner advice)
-is to let the stack continue to unwind before we start the new diff
-otherwise some code in the middle of the stack expects some output that
-isn't there and triggers an error"
-  (let ((file-A (ad-get-arg 0))
-        (file-B (ad-get-arg 1))
-        ediff-do-hexl-diff)
-    (condition-case err
-        (progn
-          ad-do-it)
-      (error
-       (if ediff-do-hexl-diff 
-           (let ((buf-A (find-file-noselect file-A))
-                 (buf-B (find-file-noselect file-B)))
-             (with-current-buffer buf-A
-               (hexl-mode 1))
-             (with-current-buffer buf-B
-               (hexl-mode 1))
-             (ediff-buffers buf-A buf-B))
-         (error (error-message-string err)))))))
-
-(defadvice ediff-setup-diff-regions (around ediff-setup-diff-regions-for-binary-files activate)
-  "when binary files differ, set the variable "
-  (condition-case err
-      (progn
-        ad-do-it)
-    (error
-     (setq ediff-do-hexl-diff
-           (and (string-match-p "^Errors in diff output.  Diff output is in.*"
-                                (error-message-string err))
-                (string-match-p "^\\(Binary \\)?[fF]iles .* and .* differ"
-                                (buffer-substring-no-properties
-                                 (line-beginning-position)
-                                 (line-end-position)))
-                (y-or-n-p "The binary files differ, look at the differences in hexl-mode? ")))
-     (error (error-message-string err)))))
-
 (windmove-default-keybindings 'shift)
 (setq framemove-hook-into-windmove t)
-
-
-
-;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (use-package rg
   :config
@@ -507,16 +429,25 @@ isn't there and triggers an error"
   )
 (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
 
-
 (use-package envrc
   :config
   (envrc-global-mode)
   )
 
-(use-package rust-ts-mode)
+(use-package exec-path-from-shell
+  :config
+  (when (daemonp)
+  (exec-path-from-shell-initialize)))
+(add-to-list 'exec-path "~/.cargo/bin")
 
-(setq select-active-regions nil)
-(setq compilation-scroll-output t)
+(require 'ansi-color)
+(defun my/ansi-colorize-buffer ()
+  (let ((buffer-read-only nil))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+(add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
+
+
+(setq dired-kill-when-opening-new-dired-buffer t)
 
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
@@ -531,80 +462,7 @@ isn't there and triggers an error"
 (require 'zt-git)
 (require 'zt-custom-commands)
 (require 'zt-display-buffer-alist)
+(require 'zt-ai)
+(require 'zt-utils)
 
-;; (add-hook 'occur-hook
-;;           '(lambda ()
-;;              (switch-to-buffer-other-window "*Occur*")))
-(use-package exec-path-from-shell
-  :config
-  (when (daemonp)
-  (exec-path-from-shell-initialize)))
-(add-to-list 'exec-path "~/.cargo/bin")
-
-(use-package eat)
-
-(require 'ansi-color)
-(defun my/ansi-colorize-buffer ()
-  (let ((buffer-read-only nil))
-    (ansi-color-apply-on-region (point-min) (point-max))))
-(add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
-
-(defun prot/keyboard-quit-dwim ()
-  "Do-What-I-Mean behaviour for a general `keyboard-quit'.
-
-The generic `keyboard-quit' does not do the expected thing when
-the minibuffer is open.  Whereas we want it to close the
-minibuffer, even without explicitly focusing it.
-
-The DWIM behaviour of this command is as follows:
-
-- When the region is active, disable it.
-- When a minibuffer is open, but not focused, close the minibuffer.
-- When the Completions buffer is selected, close it.
-- In every other case use the regular `keyboard-quit'."
-  (interactive)
-  (cond
-   ((region-active-p)
-    (keyboard-quit))
-   ((derived-mode-p 'completion-list-mode)
-    (delete-completion-window))
-   ((> (minibuffer-depth) 0)
-    (abort-recursive-edit))
-   (t
-    (keyboard-quit))))
-
-(define-key global-map (kbd "C-g") #'prot/keyboard-quit-dwim)
-(setq dired-kill-when-opening-new-dired-buffer t)
-
-(use-package aider
-  :straight (:host github :repo "tninja/aider.el" :files ("aider.el"))
-  :config
-  ;; For claude-3-5-sonnet
-  (setq aider-args '("--model" "ollama_chat/deepseek-r1:7b"))
-  (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434")
-  ;; Or chatgpt model
-  ;; (setq aider-args '("--model" "o3-mini"))
-  ;; (setenv "OPENAI_API_KEY" <your-openai-api-key>)
-  ;; Or use your personal config file
-  ;; (setq aider-args `("--config" ,(expand-file-name "~/.aider.conf.yml")))
-  ;; ;;
-  ;; Optional: Set a key binding for the transient menu
-  (global-set-key (kbd "C-c a") 'aider-transient-menu))
-
-
-(use-package copilot
-  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
-  :ensure t
-  :config
-  (add-hook 'prog-mode-hook 'copilot-mode)
-  (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-  (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
-
-(use-package copilot-chat
-  :straight (:host github :repo "chep/copilot-chat.el" :files ("*.el"))
-  :bind (:map global-map
-            ("C-c z C-y" . copilot-chat-yank)
-            ("C-c z M-y" . copilot-chat-yank-pop)
-            ("C-c z C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
-  )
 
