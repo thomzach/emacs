@@ -645,6 +645,15 @@ The DWIM behaviour of this command is as follows:
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
   :ensure t
   :config
+  (add-hook 'prog-mode-hook 'copilot-mode)
   (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
   (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
+
+(use-package copilot-chat
+  :straight (:host github :repo "chep/copilot-chat.el" :files ("*.el"))
+  :bind (:map global-map
+            ("C-c z C-y" . copilot-chat-yank)
+            ("C-c z M-y" . copilot-chat-yank-pop)
+            ("C-c z C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1))))
+  )
 
