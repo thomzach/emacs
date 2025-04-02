@@ -24,7 +24,31 @@
          (dedicated . t)
          (window-height . fit-window-to-buffer)
          (body-function . zt-select-window))
-
+     ("\\*\\(Backtrace\\|Warnings\\|Compile-Log\\|Messages\\|Bookmark List\\|Occur\\|eldoc\\)\\*"
+      (display-buffer-in-side-window)
+      (window-height . 0.25)
+      (side . bottom)
+      (slot . 0))
+     ("\\*\\([Hh]elp\\)\\*"
+      (display-buffer-in-side-window)
+      (window-width . 75)
+      (side . right)
+      (slot . 0))
+     ("\\*\\(Ibuffer\\)\\*"
+      (display-buffer-in-side-window)
+      (window-width . 100)
+      (side . right)
+      (slot . 1))
+     ("\\*\\(Flymake diagnostics\\|xref\\|Completions\\)"
+      (display-buffer-in-side-window)
+      (window-height . 0.25)
+      (side . bottom)
+      (slot . 1))
+     ("\\*\\(grep\\|find\\)\\*"
+      (display-buffer-in-side-window)
+      (window-height . 0.25)
+      (side . bottom)
+      (slot . 2))
         ))
 
 ;; If you want `switch-to-buffer' and related to respect those rules
@@ -51,6 +75,5 @@
 ;; (info "(elisp) Buffer Display Action Functions")
 ;; (info "(elisp) Buffer Display Action Alists")
 ;; (info "(elisp) Window Parameters")
-
 
 (provide 'zt-display-buffer-alist)
