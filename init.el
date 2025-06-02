@@ -63,7 +63,8 @@
 
 (setq comp-async-report-warnings-errors nil)
 
-(set-face-attribute 'default nil :font "Iosevka NF" :height 200)
+(set-face-attribute 'default nil :font "Blex Mono Nerd Font" :height 200)
+;; (set-face-attribute 'default nil :font "Iosevka NF" :height 200)
 
 (use-package no-littering)
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))

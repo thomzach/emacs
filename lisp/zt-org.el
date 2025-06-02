@@ -1,5 +1,5 @@
 
-(setq org-directory "/mnt/nas/org/")
+(setq org-directory "/home/zach/org/")
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)

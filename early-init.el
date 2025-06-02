@@ -17,9 +17,10 @@
   ;; These colors should match your selected theme for maximum effect
   ;; Note that for catppuccin whenever we create a new frame or open it on terminal
   ;; it is necessary to reload the theme.
-  (set-face-attribute 'default nil :background "#292D3E" :foreground "#292D3E"))
+  (set-face-attribute 'default nil :background "#292D3E" :foreground "#292D3E")
+  )
 
-(emacs-solo/avoid-initial-flash-of-light)
+;; (emacs-solo/avoid-initial-flash-of-light)
 
 ;; Better Window Management handling
 (setq frame-resize-pixelwise t

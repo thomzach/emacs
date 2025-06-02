@@ -3,10 +3,10 @@
 ;;   (load-theme 'kaolin-temple t)
 ;;  (kaolin-treemacs-theme))
 
-(use-package catppuccin-theme
-  :config
-  (setq catppuccin-flavor 'macchiato)
-  )
+;; (use-package catppuccin-theme
+;;   :config
+;;   (setq catppuccin-flavor 'macchiato)
+;;   )
 
 ;; (use-package spaceway-theme
 ;;   :ensure nil

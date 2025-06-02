@@ -4,7 +4,7 @@
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   ;; (corfu-auto t)                 ;; Enable auto completion
-  ;; (corfu-auto-delay 0.5)
+  ;; (corfu-auto-delay 0.2)
   ;; (corfu-quit-no-match 'separator) ;; or t
   ;; (corfu-separator ?\s)          ;; Orderless field separator
   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
