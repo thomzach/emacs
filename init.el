@@ -229,6 +229,8 @@
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
 
+(add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-ts-mode))
+
 
 (setq tramp-default-method "sshx")
 ;; Dired stuff
