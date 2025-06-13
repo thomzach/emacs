@@ -2,9 +2,13 @@
   :config
   (setq mc/always-run-for-all t)
   :bind
-  (("C-S-J" . mc/mark-all-dwim)
-  ("C-<" . mc/mark-all-like-this)
-  ("C->" . mc/mark-next-like-this)))
+  (
+   ("C-S-c C-S-c" . mc/edit-lines)
+   ("C->" . mc/mark-next-like-this)
+   ("C-<" . mc/mark-previous-like-this)
+   ("C-c C->" . mc/mark-all-dwim)
+   ("C-c C-<" . mc/mark-all-like-this)
+  ))
 
 
 (use-package expand-region
