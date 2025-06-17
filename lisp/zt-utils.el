@@ -67,4 +67,22 @@ The DWIM behaviour of this command is as follows:
 (define-key global-map (kbd "C-g") #'prot/keyboard-quit-dwim)
 
 
+(when (and (eq system-type 'gnu/linux)
+           (with-temp-buffer
+             (insert-file-contents "/proc/version")
+             (goto-char (point-min))
+             (re-search-forward "Microsoft" nil t)))
+  (setq interprogram-cut-function
+        (lambda (text &optional push)
+          (let ((process-connection-type nil))
+            (let ((proc (start-process "win32yank" "*Messages*" "win32yank.exe" "-i")))
+              (process-send-string proc text)
+              (process-send-eof proc)))))
+  
+  (setq interprogram-paste-function
+        (lambda ()
+          (shell-command-to-string "win32yank.exe -o"))))
+
 (provide 'zt-utils)
+
+
