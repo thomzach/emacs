@@ -107,15 +107,62 @@
 
 (use-package modus-themes
   :init
-  (setq modus-themes-italic-constructs t
-      modus-themes-bold-constructs nil)
-    )
+  (require-theme 'modus-themes)
+  :custom
+  (modus-themes-italic-constructs t)
+  (modus-themes-bold-constructs nil)
+  (modus-themes-mixed-fonts t)
+  (modus-themes-variable-pitch-ui t)
+  (modus-themes-custom-auto-reload t)
+  (modus-themes-disable-other-themes t)
+  (modus-themes-prompts '(italic bold))
+  (modus-themes-completions
+   '((matches . (extrabold))
+     (selection . (semibold italic text-also))))
+
+  (modus-themes-org-blocks 'gray-background)
+
+  (modus-themes-headings
+   '((1 . (variable-pitch 1.5))
+     (2 . (1.3))
+     (agenda-date . (1.3))
+     (agenda-structure . (variable-pitch light 1.8))
+     (t . (1.1))))
+
+
+  (modus-vivendi-palette-overrides
+   '(
+
+     (bg-main     "#000000")
+     (bg-dim      "#111111")
+     (bg-active   "#222222")
+     (bg-inactive "#333333")
+
+     (fg-main     "#ffffff")
+     (fg-dim      )
+
+     (cursor      "#00ffff")
+     (warning     "#fafad2")
+
+     (bg-completion "#2e8b57")
+     (bg-region     bg-active)
+     (bg-tab-bar        bg-main)
+     (bg-tab-current    bg-active)
+     (bg-tab-other      bg-dim)
+     (fringe unspecified)
+     (bg-mode-line-active bg-dim)
+     (border-mode-line-active unspecified)
+     (bg-line-number-active  bg-main)
+     (bg-line-number-inactive  bg-main)
+     ))
+
+  :config
+  (load-theme 'modus-vivendi t))
 
 (defun zt/setup-appearance (frame)
   (with-selected-frame frame
     (remove-hook 'after-make-frame-functions 'zt/setup-appearance)
     ;; (catppuccin-reload)
-  (setq modus-themes-common-palette-overrides modus-themes-preset-overrides-intense)
   (load-theme 'modus-vivendi t)
     ))
 
