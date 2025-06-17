@@ -63,11 +63,11 @@
 
 (setq comp-async-report-warnings-errors nil)
 
-(set-face-attribute 'default nil :font "Blex Mono Nerd Font" :height 200)
-;; (set-face-attribute 'default nil :font "Iosevka NF" :height 200)
+;; (set-face-attribute 'default nil :font "Blex Mono Nerd Font" :height 200)
+(set-face-attribute 'default nil :font "Iosevka NF" :height 230)
 
 (use-package no-littering)
-(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+;; (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 (setq make-backup-files nil)
 
 (use-package which-key
@@ -366,10 +366,10 @@
                 ;; tabs -> » else >
                 (tab-mark ?\t [187 ?\t] [62 ?\t])))
 
-(use-package undo-tree
-  :ensure t
-  :init
-  (global-undo-tree-mode))
+;; (use-package undo-tree
+;;   :ensure t
+;;   :init
+;;   (global-undo-tree-mode))
 
 (use-package yasnippet
   :ensure t
@@ -480,5 +480,6 @@
 (require 'zt-display-buffer-alist)
 (require 'zt-ai)
 (require 'zt-utils)
+
 
 
