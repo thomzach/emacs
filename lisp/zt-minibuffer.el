@@ -2,7 +2,7 @@
   :init
   (vertico-mode)
   (setq vertico-scroll-margin 0)
-  (setq vertico-count 20)
+  (setq vertico-count 10)
   (setq vertico-resize t)
   (setq vertico-cycle t)
   )
@@ -21,7 +21,7 @@
   ;; enabled right away. Note that this forces loading the package.
   (marginalia-mode))
 
-(use-package consult)
+;; (use-package consult)
 
 
 (provide 'zt-minibuffer)
