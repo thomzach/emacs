@@ -78,25 +78,6 @@
 
 (use-package undo-fu)
 
-(use-package projectile
-  :diminish projectile-mode
-  :config (projectile-mode)
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  ;; NOTE: Set this to the folder where you keep your Git repos!
-  (when (eq system-type 'windows-nt)
-    (when (file-directory-p "c:/work")
-      (setq projectile-project-search-path '("c:/work")))
-    (setq projectile-switch-project-action #'projectile-dired)
-    )
-  (when (eq system-type 'gnu/linux)
-    (when (file-directory-p "~/code")
-      (setq projectile-project-search-path '("~/code")))
-    (setq projectile-switch-project-action #'projectile-dired)
-    )
-  )
-
 
 (use-package treemacs-icons-dired
   :config (treemacs-icons-dired-mode))
@@ -230,6 +211,8 @@
 (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
 
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.c\\'" . c++-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode))
 
 
 (setq tramp-default-method "sshx")
@@ -482,5 +465,7 @@
 (require 'zt-utils)
 (require 'zt-projects)
 
-
+(use-package direnv
+ :config
+ (direnv-mode))
 
