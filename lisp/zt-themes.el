@@ -3,10 +3,10 @@
 ;;   (load-theme 'kaolin-temple t)
 ;;  (kaolin-treemacs-theme))
 
-;; (use-package catppuccin-theme
-;;   :config
-;;   (setq catppuccin-flavor 'macchiato)
-;;   )
+(use-package catppuccin-theme
+  :config
+  (setq catppuccin-flavor 'frappe)
+  )
 
 ;; (use-package spaceway-theme
 ;;   :ensure nil
@@ -162,8 +162,8 @@
 (defun zt/setup-appearance (frame)
   (with-selected-frame frame
     (remove-hook 'after-make-frame-functions 'zt/setup-appearance)
-    ;; (catppuccin-reload)
-  (load-theme 'modus-vivendi t)
+    (catppuccin-reload)
+  ;; (load-theme 'modus-vivendi t)
     ))
 
 (if (daemonp)
