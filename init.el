@@ -137,12 +137,12 @@
 ;;         ))
 (setq treesit-font-lock-level 4)
 
-(use-package treesit-auto
-  :custom
-  (treesit-auto-install 'prompt)
-  :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
+;; (use-package treesit-auto
+;;   :custom
+;;   (treesit-auto-install 'prompt)
+;;   :config
+;;   (treesit-auto-add-to-auto-mode-alist 'all)
+;;   (global-treesit-auto-mode))
 
 (use-package ripgrep)
 (use-package hl-todo
@@ -211,8 +211,8 @@
 (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
 
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.c\\'" . c++-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.c\\'" . c-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c-ts-mode))
 
 
 (setq tramp-default-method "sshx")
@@ -468,4 +468,6 @@
 (use-package direnv
  :config
  (direnv-mode))
+
+(use-package devicetree-ts-mode)
 
