@@ -14,7 +14,11 @@
 
 
 (use-package expand-region
-  :bind ("M-'" . er/expand-region))
+  :bind
+  (
+   ("M-'" . er/expand-region)
+   ("M-\"" . er/contract-region)
+   ))
 
 (global-set-key (kbd "M-i") 'imenu)
 
