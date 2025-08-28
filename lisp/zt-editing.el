@@ -4,8 +4,10 @@
   :bind
   (
    ("C-S-c C-S-c" . mc/edit-lines)
-   ("C->" . mc/mark-next-like-this)
+   ("C->" . mc/mark-next-like-this) ;ctrl + shift + >
    ("C-<" . mc/mark-previous-like-this)
+   ("C-M->" . mc/skip-to-next-like-this)
+   ("C-M-<" . mc/skip-to-previous-like-this)
    ("C-c C->" . mc/mark-all-dwim)
    ("C-c C-<" . mc/mark-all-like-this)
   ))
