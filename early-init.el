@@ -53,6 +53,11 @@
 (menu-bar-mode -1)            ; Disable the menu bar
 (global-auto-revert-mode 1)
 
+
+
+
+
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -68,7 +73,13 @@
 
 ;; Use straight.el for use-package expressions
 (straight-use-package 'use-package)
+(straight-use-package 'org)
 (setq straight-use-package-by-default t)
+
+
+(use-package project
+  :straight (:type built-in))
+
 
 (require 'package)
 
