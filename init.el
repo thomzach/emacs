@@ -453,6 +453,7 @@
 
 (require 'zt-themes)
 (require 'zt-lsp)
+(require 'zt-eglot)
 (require 'zt-org)
 (require 'zt-minibuffer)
 (require 'zt-completion)
@@ -523,3 +524,6 @@
   :ensure t ; only need to install it, embark loads it after consult if found
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
+
+
+;; LOOK into jinx emacs packages
