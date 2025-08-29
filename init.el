@@ -8,7 +8,7 @@
   (setq tab-always-indent 'complete)
   :bind
   (("M-o" . other-window)
-   ("M-j" . duplicate-dwim)
+   ("C-," . duplicate-dwim)
    ("<f5>" . compile)
    ;; ("M-g r" . recentf)
    ;; ("M-s g" . grep)
