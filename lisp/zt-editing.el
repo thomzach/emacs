@@ -30,5 +30,10 @@
   (setq avy-timeout-seconds 1)
   )
 
+(use-package move-text
+  :bind
+  ("M-p" . move-text-up)
+  ("M-n" . move-text-down)
+  )
 
 (provide 'zt-editing)
