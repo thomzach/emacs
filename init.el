@@ -455,7 +455,7 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (require 'zt-themes)
-;; (require 'zt-lsp)
+(require 'zt-lsp)
 (require 'zt-eglot)
 (require 'zt-org)
 (require 'zt-minibuffer)
