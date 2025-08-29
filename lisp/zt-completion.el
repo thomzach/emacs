@@ -3,6 +3,8 @@
   ;; Optional customizations
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  (corfu-max-width 120)
+  (corfu-min-width 40)
   ;; (corfu-auto t)                 ;; Enable auto completion
   ;; (corfu-auto-delay 0.2)
   ;; (corfu-quit-no-match 'separator) ;; or t
@@ -13,7 +15,7 @@
   ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
   ;; (corfu-scroll-margin 5)        ;; Use scroll margin
-
+  
   ;; Enable Corfu only for certain modes.
   ;; :hook ((prog-mode . corfu-mode)
   ;;        (shell-mode . corfu-mode)
@@ -24,6 +26,10 @@
   ;; See also `corfu-excluded-modes'.
   :init
   (global-corfu-mode))
+
+(use-package nerd-icons-corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (use-package cape
   ;; Bind dedicated completion commands
@@ -59,15 +65,6 @@
   (add-to-list 'completion-at-point-functions #'cape-line)
   )
 
-
-
-(use-package kind-icon
-  :ensure t
-  :after corfu
-  :custom
-  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (use-package capf-autosuggest
   :config

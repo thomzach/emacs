@@ -64,7 +64,10 @@
 (setq comp-async-report-warnings-errors nil)
 
 ;; (set-face-attribute 'default nil :font "Blex Mono Nerd Font" :height 200)
-(set-face-attribute 'default nil :font "Iosevka NF" :height 230)
+;; (set-face-attribute 'default nil :font "Iosevka NF" :height 200)
+;; (set-face-attribute 'default nil :font "Iosevka NF")
+
+(set-frame-font "Iosevka NF-20" nil t)
 
 (use-package no-littering)
 ;; (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
@@ -452,7 +455,7 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (require 'zt-themes)
-(require 'zt-lsp)
+;; (require 'zt-lsp)
 (require 'zt-eglot)
 (require 'zt-org)
 (require 'zt-minibuffer)
