@@ -456,7 +456,6 @@
 
 (require 'zt-themes)
 (require 'zt-lsp)
-(require 'zt-eglot)
 (require 'zt-org)
 (require 'zt-minibuffer)
 (require 'zt-completion)

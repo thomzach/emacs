@@ -57,10 +57,24 @@
          :stopAtEntry t
          :externalConsole nil)))
 
-(defun zt/lsp-format-on-save ()
-  (when (bound-and-true-p lsp-mode)
-    (lsp-format-buffer)))
+(use-package eglot
+  :hook
+  (c-ts-mode . eglot-ensure)
+  )
 
-(add-hook 'before-save-hook #'zt/lsp-format-on-save)
+;; (defun zt/lsp-format-on-save ()
+;;   (interactive)
+;;   (when (bound-and-true-p lsp-mode)
+;;     (lsp-format-buffer))
+;;   (when (bound-and-true-p eglot-managed-mode)
+;;     (eglot-format-buffer))
+;;   )
+
+;; (add-hook 'before-save-hook #'zt/lsp-format-on-save)
+
+;; Only format in Eglot-managed buffers
+(add-hook 'eglot-managed-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook #'eglot-format-buffer nil)))
 
 (provide 'zt-lsp)

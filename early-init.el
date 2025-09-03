@@ -80,6 +80,9 @@
 (use-package project
   :straight (:type built-in))
 
+(use-package eglot
+  :straight (:type built-in))
+
 
 (require 'package)
 
