@@ -467,25 +467,14 @@
 (require 'zt-ai)
 (require 'zt-utils)
 (require 'zt-projects)
+(require 'zt-notes)
+
 
 (use-package direnv
  :config
  (direnv-mode))
 
 (use-package devicetree-ts-mode)
-
-(use-package denote
-  :hook (dired-mode . denote-dired-mode)
-  :bind
-  (("C-c n n" . denote-open-or-create)
-   ("C-c n r" . denote-rename-file)
-   ("C-c n l" . denote-link)
-   ("C-c n b" . denote-backlinks)
-   ("C-c n d" . denote-dired)
-   ("C-c n g" . denote-grep))
-  :config
-  (setq denote-directory (expand-file-name "~/org/denote/"))
-)
 
 (use-package embark
   :ensure t
@@ -527,5 +516,15 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize)
+  ;; You can pull more env vars if needed:
+  ;; (exec-path-from-shell-copy-envs '("PATH" "MANPATH"))
+)
+
+(setq org-format-latex-options
+      (plist-put org-format-latex-options :scale 3.0))
 
 ;; LOOK into jinx emacs packages
