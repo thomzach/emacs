@@ -29,12 +29,6 @@
 
 (setq inhibit-compacting-font-caches t)
 
-;; Disables unused UI Elements
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(tooltip-mode -1)
-
 ;; Resizing the Emacs frame can be a terribly expensive part of changing the
 ;; font. By inhibiting this, we easily halve startup times with fonts that are
 ;; larger than the system default.
@@ -45,16 +39,6 @@
 (setq inhibit-startup-message t)
 (setq visible-bell t)
 (setq native-comp-async-report-warnings-errors nil)
-
-(scroll-bar-mode -1)        ; Disable visible scrollbar
-(tool-bar-mode -1)          ; Disable the toolbar
-(tooltip-mode -1)           ; Disable tooltips
-(set-fringe-mode 10)        ; Give some breathing room
-(menu-bar-mode -1)            ; Disable the menu bar
-(global-auto-revert-mode 1)
-
-
-
 
 
 
@@ -101,6 +85,14 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
+(defun my/disable-gui-things (frame)
+  (when (display-graphic-p frame)
+    (with-selected-frame frame
+      (scroll-bar-mode -1)
+      (tool-bar-mode -1)
+      (menu-bar-mode -1))))
+
+(add-hook 'after-make-frame-functions #'my/disable-gui-things)
 
 (provide 'early-init)
 ;;; early-init.el ends here
