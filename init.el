@@ -69,7 +69,19 @@
 ;; (set-face-attribute 'default nil :font "Iosevka NF" :height 200)
 ;; (set-face-attribute 'default nil :font "Iosevka NF")
 
-(set-frame-font "Iosevka NF-20" nil t)
+(defvar zt/default-font "Iosevka NF-20"
+  "My preferred default font for graphical Emacs frames.")
+
+(when (display-graphic-p)
+  (set-frame-font zt/default-font nil t))
+
+(defun zt/set-default-font (frame)
+  (with-selected-frame frame
+    (when (display-graphic-p)
+      (set-frame-font zt/default-font nil t))))
+
+(add-hook 'after-make-frame-functions #'zt/set-default-font)
+
 
 (use-package no-littering)
 ;; (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
