@@ -157,19 +157,32 @@
      ))
 
   :config
-  (load-theme 'modus-vivendi t))
-
-(defun zt/setup-appearance (frame)
-  (with-selected-frame frame
-    (remove-hook 'after-make-frame-functions 'zt/setup-appearance)
-    (catppuccin-reload)
   ;; (load-theme 'modus-vivendi t)
-    ))
-
-(if (daemonp)
-    (add-hook 'after-make-frame-functions 'zt/setup-appearance)
-  (zt/setup-appearance (car (frame-list)))
   )
+
+(defun zt/apply-theme-for-frame (&optional frame)
+  "Apply GUI vs TTY theme for FRAME (or current frame)."
+  (with-selected-frame (or frame (selected-frame))
+    ;; Always start from a clean slate so earlier themes can't bleed through:
+    (mapc #'disable-theme custom-enabled-themes)
+    (if (display-graphic-p)
+        (progn
+          ;; ---- GUI THEME ----
+          ;; Pick ONE of these; comment the other out.
+          ;; (load-theme 'modus-vivendi t)
+          ;; If you prefer catppuccin in GUI instead:
+          (load-theme 'catppuccin t)
+          (when (boundp 'catppuccin-flavor) (catppuccin-reload))
+          )
+      ;; ---- TERMINAL THEME ----
+      (load-theme 'wombat t))))
+
+;; Apply immediately for the current frame:
+(zt/apply-theme-for-frame)
+
+;; Also apply for any frames created later (useful for emacsclient/daemon):
+(add-hook 'after-make-frame-functions #'zt/apply-theme-for-frame)
+(add-hook 'tty-setup-hook (lambda () (zt/apply-theme-for-frame (selected-frame))))
 
 
 

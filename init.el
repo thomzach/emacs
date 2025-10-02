@@ -542,3 +542,4 @@
       (plist-put org-format-latex-options :scale 3.0))
 
 ;; LOOK into jinx emacs packages
+
