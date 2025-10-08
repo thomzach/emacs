@@ -99,8 +99,7 @@
 (use-package treemacs-icons-dired
   :config (treemacs-icons-dired-mode))
 
-(use-package dired-hide-dotfiles
-  :hook (dired-mode . dired-hide-dotfiles-mode))
+(use-package dired-hide-dotfiles)
 
 
 (use-package recentf
