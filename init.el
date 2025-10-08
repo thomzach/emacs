@@ -439,7 +439,7 @@
   :bind (("M-O" . ace-window))
   :custom
   (aw-scope 'global)
-  (aw-keys '(?t ?s ?n ?e ?r ?i ?a ?k o))
+  (aw-keys '(?n ?e ?i ?o ?t ?s ?r ?a))
   (aw-minibuffer-flags t)
   )
 (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
