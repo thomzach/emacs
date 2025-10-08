@@ -436,7 +436,7 @@
 
 
 (use-package ace-window
-  :bind (("M-o" . ace-window))
+  :bind (("M-O" . ace-window))
   :custom
   (aw-scope 'global)
   (aw-keys '(?t ?s ?n ?e ?r ?i ?a ?k o))
