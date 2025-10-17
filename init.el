@@ -10,6 +10,7 @@
   (setq tab-always-indent 'complete)
   :bind
   (("M-o" . other-window)
+   ("M-O" . other-frame)
    ("C-," . duplicate-dwim)
    ("<f5>" . compile)
    ;; ("M-g r" . recentf)
@@ -227,6 +228,7 @@
 (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
 
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c-ts-mode))
 
@@ -436,7 +438,7 @@
 
 
 (use-package ace-window
-  :bind (("M-O" . ace-window))
+  :bind (("C-M-S-o" . ace-window))
   :custom
   (aw-scope 'global)
   (aw-keys '(?n ?e ?i ?o ?t ?s ?r ?a))
@@ -542,3 +544,7 @@
 
 ;; LOOK into jinx emacs packages
 
+
+(use-package devdocs
+  :bind
+  (("C-h D" . devdocs-lookup)))
