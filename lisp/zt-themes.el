@@ -298,10 +298,10 @@
         (progn
           ;; ---- GUI THEME ----
           ;; Pick ONE of these; comment the other out.
-          ;; (load-theme 'modus-vivendi t)
+          (load-theme 'modus-vivendi t)
           ;; If you prefer catppuccin in GUI instead:
-          (load-theme 'catppuccin t)
-          (when (boundp 'catppuccin-flavor) (catppuccin-reload))
+          ;; (load-theme 'catppuccin t)
+          ;; (when (boundp 'catppuccin-flavor) (catppuccin-reload))
           )
       ;; ---- TERMINAL THEME ----
       (load-theme 'wombat t))))
