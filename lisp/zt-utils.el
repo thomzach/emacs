@@ -83,6 +83,44 @@ The DWIM behaviour of this command is as follows:
         (lambda ()
           (shell-command-to-string "win32yank.exe -o"))))
 
+
+(defgroup zt/web-search nil
+  "Search the web for an editable query based on word/region at point."
+  :group 'convenience)
+
+(defcustom zt/web-search-engine "https://duckduckgo.com/?q=%s"
+  "Search URL template. %s will be replaced with the URL-encoded query."
+  :type 'string
+  :group 'zt/web-search)
+
+(defvar zt/web-search-history nil
+  "Minibuffer history for `zt/web-search-editable'.")
+
+(defun zt/web--initial-query ()
+  "Return region text or word/symbol at point, or empty string."
+  (cond
+   ((use-region-p)
+    (buffer-substring-no-properties (region-beginning) (region-end)))
+   ((thing-at-point 'symbol t))
+   ((thing-at-point 'word t))
+   (t "")))
+
+(defun zt/web-search-word (&optional choose-engine)
+  "Prompt with the word/region at point, let you edit, then open a web search.
+With CHOOSE-ENGINE (prefix arg), prompt for a search engine template first."
+  (interactive "P")
+  (when choose-engine
+    (setq zt/web-search-engine
+          (read-string "Search engine (use %s for query): "
+                       zt/web-search-engine)))
+  (let* ((init (string-trim (or (zt/web--initial-query) "")))
+         (query (read-from-minibuffer "Search web for: " init nil nil
+                                      'zt/web-search-history)))
+    (unless (string-empty-p (string-trim query))
+      (browse-url (format zt/web-search-engine
+                          (url-hexify-string query))))))
+
+
 (provide 'zt-utils)
 
 
