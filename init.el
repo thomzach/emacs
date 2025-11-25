@@ -97,11 +97,24 @@
 (use-package undo-fu)
 
 
-(use-package treemacs-icons-dired
-  :config (treemacs-icons-dired-mode))
-
 (use-package dired-hide-dotfiles)
 
+(use-package diredfl
+  :hook (dired-mode . diredfl-mode))
+
+;; (use-package nerd-icons
+;;   :ensure t)
+
+;; (use-package nerd-icons-dired
+;;   :ensure t
+;;   :hook (dired-mode . nerd-icons-dired-mode))
+
+
+;; (add-hook 'dired-mode-hook
+;;           (lambda ()
+;;             (when (string-match-p "/home/zach/org/denote/" (or default-directory ""))
+;;               (treemacs-icons-dired-mode -1)
+;;               (nerd-icons-dired-mode -1))))
 
 (use-package recentf
   :config
