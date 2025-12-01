@@ -49,7 +49,11 @@
       (window-height . 0.25)
       (side . bottom)
       (slot . 2))
-        ))
+     ("\\*compilation\\*"
+      (display-buffer-reuse-mode-window
+       display-buffer-below-selected)
+      (window-height . 0.25))
+     ))
 
 ;; If you want `switch-to-buffer' and related to respect those rules
 ;; (I personally do not want this, because if I am switching to a
