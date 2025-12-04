@@ -9,36 +9,13 @@
 (eval-after-load "org"
   '(require 'ox-md nil t))
 
-;; (use-package org-mode
-;;   :ensure nil
-;;   :config
+
+(use-package org
+  :hook ((org-mode . visual-line-mode)
+         (org-mode . org-indent-mode)))
+
 (setq org-confirm-babel-evaluate nil)
-;; )
-;; (use-package org-roam
-;;   :after org
-;;   :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
-;;   (setq org-roam-dailies-directory "daily/")
-;;   (setq org-roam-dailies-capture-templates
-;;         '(("d" "default" entry "** %?" :if-new
-;;            (file+head+olp "%<%G-W%V>.org" "#+title: %<%G-W%V>\n"
-;;                           ("%<%A %Y-%m-%d>")))))
-;;   :custom
-;;   (org-roam-directory (file-truename (expand-file-name "roam" org-directory)))
-;;   :bind (("C-c n f" . org-roam-node-find)
-         
-;; 	     ("C-c n r" . org-roam-node-random)		    
-;; 	     (:map org-mode-map
-;; 	           (("C-c n i" . org-roam-node-insert)
-;; 		        ("C-c n o" . org-id-get-create)
-;; 		        ("C-c n t" . org-roam-tag-add)
-;; 		        ("C-c n a" . org-roam-alias-add)
-;; 		        ("C-c n l" . org-roam-buffer-toggle))))
-;;   :bind-keymap
-;;   ("C-c n d" . org-roam-dailies-map)
-;;   :config
-;;   (require 'org-roam-dailies)
-;;   (org-roam-setup)
-;;   )
+
 
 (use-package org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
@@ -107,7 +84,6 @@
       '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-
 
 
 (provide 'zt-org)
