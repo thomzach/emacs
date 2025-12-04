@@ -561,3 +561,6 @@
 (use-package devdocs
   :bind
   (("C-h D" . devdocs-lookup)))
+
+(setq gnus-select-method
+      '(nntp "news.gwene.org"))
