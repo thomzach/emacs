@@ -21,6 +21,7 @@
    ;; ("C-z" . nil)
    ("C-x C-z" . nil)
    ("C-x C-k RET" . nil)
+   ("C-M-." . rg-dwim-project-dir)
    )
   :custom
   (completion-ignore-case t)
