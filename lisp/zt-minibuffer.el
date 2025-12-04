@@ -21,7 +21,11 @@
   ;; enabled right away. Note that this forces loading the package.
   (marginalia-mode))
 
-;; (use-package consult)
+(use-package consult
+  :bind
+  (
+      ("C-x b" . consult-buffer)
+   ))
 
 
 (provide 'zt-minibuffer)
