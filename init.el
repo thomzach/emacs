@@ -565,3 +565,5 @@
 
 (setq gnus-select-method
       '(nntp "news.gwene.org"))
+
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
