@@ -1,3 +1,25 @@
+;; Optionally use the `orderless' completion style.
+(use-package orderless
+  :custom
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
+  ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+  (completion-styles '(orderless partial-completion basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion))))
+  (orderless-component-separator 'orderless-escapable-split-on-space)
+  (orderless-matching-styles
+   '(orderless-literal
+     orderless-prefixes
+     orderless-initialism
+     orderless-regexp
+     orderless-flex
+     ;; orderless-strict-leading-initialism
+     ;; orderless-strict-initialism
+     ;; orderless-strict-full-initialism
+     ;; orderless-without-literal          ; Recommended for dispatches instead
+     )))
+
 (use-package corfu
   :after orderless
   ;; Optional customizations

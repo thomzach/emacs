@@ -95,27 +95,9 @@
   :config
   (setq which-key-idle-delay 0.1))
 
-(use-package undo-fu)
-
-
-(use-package dired-hide-dotfiles)
 
 (use-package diredfl
   :hook (dired-mode . diredfl-mode))
-
-;; (use-package nerd-icons
-;;   :ensure t)
-
-;; (use-package nerd-icons-dired
-;;   :ensure t
-;;   :hook (dired-mode . nerd-icons-dired-mode))
-
-
-;; (add-hook 'dired-mode-hook
-;;           (lambda ()
-;;             (when (string-match-p "/home/zach/org/denote/" (or default-directory ""))
-;;               (treemacs-icons-dired-mode -1)
-;;               (nerd-icons-dired-mode -1))))
 
 (use-package recentf
   :config
@@ -133,72 +115,9 @@
   (dashboard-setup-startup-hook)
   )
 
-;; (setq treesit-language-source-alist
-;;       '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-;;         (cmake "https://github.com/uyha/tree-sitter-cmake")
-;;         (css "https://github.com/tree-sitter/tree-sitter-css")
-;;         (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-;;         (go "https://github.com/tree-sitter/tree-sitter-go")
-;;         (html "https://github.com/tree-sitter/tree-sitter-html")
-;;         (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-;;         (json "https://github.com/tree-sitter/tree-sitter-json")
-;;         (make "https://github.com/alemuller/tree-sitter-make")
-;;         (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-;;         (python "https://github.com/tree-sitter/tree-sitter-python")
-;;         (toml "https://github.com/tree-sitter/tree-sitter-toml")
-;;         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-;;         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-;;         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-;;         (c "https://github.com/tree-sitter/tree-sitter-c")
-;;         (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
-;;         (rust "https://github.com/tree-sitter/tree-sitter-rust")
-;;         ))
-
-;; (setq major-mode-remap-alist
-;;       '((yaml-mode . yaml-ts-mode)
-;;         (bash-mode . bash-ts-mode)
-;;         (js2-mode . js-ts-mode)
-;;         (typescript-mode . typescript-ts-mode)
-;;         (json-mode . json-ts-mode)
-;;         (css-mode . css-ts-mode)
-;;         (python-mode . python-ts-mode)
-;;         (c-mode . c-ts-mode)
-;;         (c++-mode . c++-ts-mode)
-;;         (c-or-c++-mode . c-or-c++-ts-mode)
-;;         ))
 (setq treesit-font-lock-level 4)
 
-;; (use-package treesit-auto
-;;   :custom
-;;   (treesit-auto-install 'prompt)
-;;   :config
-;;   (treesit-auto-add-to-auto-mode-alist 'all)
-;;   (global-treesit-auto-mode))
-
 (use-package ripgrep)
-(use-package hl-todo
-  :ensure t
-  :custom-face
-  (hl-todo ((t (:inherit hl-todo :italic t))))
-  :hook ((prog-mode . hl-todo-mode)
-         (yaml-mode . hl-todo-mode)))
-(global-hl-todo-mode)
-
-
-
-(setq browse-url-browser-function 'eww-browse-url
-      shr-use-colors nil
-      shr-bullet "• "
-      shr-folding-mode t
-      eww-search-prefix "https://duckduckgo.com/html?q="
-      url-privacy-level '(email agent cookies lastloc))
-(use-package pdf-tools
-  :config
-  (pdf-tools-install)
-  (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
-  ;;(add-hook 'pdf-view-mode-hook (lambda () (blink-cursor-mode -1)))
-  (setq-default pdf-view-display-size 'fit-page)
-  )
 
 (blink-cursor-mode -1)
 (setq scroll-margin 5)
@@ -209,15 +128,12 @@
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
               (ggtags-mode 1))))
 
-(advice-add 'ggtags-prev-mark :override
-	        (lambda () (pop-tag-mark)))
-
-(use-package dumb-jump
-  :config
-  (setq dumb-jump-force-searcher 'rg)
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-  )
+;; (use-package dumb-jump
+;;   :config
+;;   (setq dumb-jump-force-searcher 'rg)
+;;   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+;;   (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
+;;   )
 
 (add-to-list 'auto-mode-alist '("\\.dsc" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.inf" . conf-mode))
@@ -245,6 +161,7 @@
 (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c-ts-mode))
+
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
 
@@ -307,36 +224,10 @@
           (lambda ()
             (ibuffer-switch-to-saved-filter-groups "default")))
 
-(use-package nix-mode
-  :mode "\\.nix\\'")
-
-
 (use-package savehist
   :init
   (savehist-mode))
 
-;; Optionally use the `orderless' completion style.
-(use-package orderless
-  :custom
-  ;; Configure a custom style dispatcher (see the Consult wiki)
-  ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
-  ;;       orderless-component-separator #'orderless-escapable-split-on-space)
-  (completion-styles '(orderless partial-completion basic))
-  (completion-category-defaults nil)
-  (completion-category-overrides '((file (styles partial-completion))))
-  (orderless-component-separator 'orderless-escapable-split-on-space)
-  (orderless-matching-styles
-   '(orderless-literal
-     orderless-prefixes
-     orderless-initialism
-     orderless-regexp
-     orderless-flex
-     ;; orderless-strict-leading-initialism
-     ;; orderless-strict-initialism
-     ;; orderless-strict-full-initialism
-     ;; orderless-without-literal          ; Recommended for dispatches instead
-     ))
-  )
 
 (add-hook 'shell-mode-hook 'compilation-shell-minor-mode)
 
