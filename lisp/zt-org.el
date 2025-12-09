@@ -85,5 +85,7 @@
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
+(setq org-format-latex-options
+      (plist-put org-format-latex-options :scale 3.0))
 
 (provide 'zt-org)
