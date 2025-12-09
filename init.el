@@ -491,6 +491,7 @@
 (require 'zt-minibuffer)
 (require 'zt-completion)
 (require 'zt-term)
+(require 'zt-dired)
 (require 'zt-editing)
 (require 'zt-git)
 (require 'zt-custom-commands)
