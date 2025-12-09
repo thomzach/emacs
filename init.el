@@ -55,6 +55,7 @@
 
 (use-package auto-compile
   :config (auto-compile-on-load-mode))
+
 (setq load-prefer-newer t)
 
 ;; Revert Dired and other buffers
@@ -484,6 +485,7 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (require 'zt-themes)
+(require 'zt-icons)
 (require 'zt-lsp)
 (require 'zt-org)
 (require 'zt-minibuffer)
