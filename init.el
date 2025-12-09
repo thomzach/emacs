@@ -511,6 +511,7 @@
 (require 'zt-projects)
 (require 'zt-notes)
 (require 'zt-window)
+(require 'zt-highlight)
 
 ;; LOOK into jinx emacs packages
 
