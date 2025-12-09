@@ -5,22 +5,73 @@
 ;;
 ;;; Code:
 
-;; Startup hacks
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6
-      vc-handled-backends '(Git))
 
-;; Hack to avoid being flashbanged
+(defcustom emacs-solo-avoid-flash-options
+  '((enabled . t)
+    (background . "#1e1e2e") ;; Catppuccin "#1e1e2e" or Crafters "#292D3E"
+    (foreground . "#1e1e2e")
+    (reset-background . "#1e1e2e")
+    (reset-foreground . "#cdd6f4")) ;; Catppuccin "#cdd6f4" or Crafters "#EEFFFF"
+  "Options to avoid flash of light on Emacs startup.
+- `enabled`: Whether to apply the workaround.
+- `background`, `foreground`: Initial colors to use.
+- `reset-background`, `reset-foreground`: Optional explicit colors to restore after startup.
+
+NOTE: The default values here presented are set for the default
+`emacs-solo' custom theme.  If you'd like to turn this ON with another
+theme, change the background/foreground variables.
+
+If reset values are nil, nothing is reset."
+  :type '(alist :key-type symbol :value-type (choice (const nil) string))
+  :group 'emacs-solo)
+
+;; HACK: avoid being flashbanged
 (defun emacs-solo/avoid-initial-flash-of-light ()
-  "Avoid flash of light when starting Emacs."
-  (setq mode-line-format nil)
-  ;; These colors should match your selected theme for maximum effect
-  ;; Note that for catppuccin whenever we create a new frame or open it on terminal
-  ;; it is necessary to reload the theme.
-  (set-face-attribute 'default nil :background "#292D3E" :foreground "#292D3E")
-  )
+  "Avoid flash of light when starting Emacs, based on `emacs-solo-avoid-flash-options`."
+  (when (alist-get 'enabled emacs-solo-avoid-flash-options)
+    (setq mode-line-format nil)
+    (set-face-attribute 'default nil
+                        :background (alist-get 'background emacs-solo-avoid-flash-options)
+                        :foreground (alist-get 'foreground emacs-solo-avoid-flash-options))))
 
-;; (emacs-solo/avoid-initial-flash-of-light)
+(defun emacs-solo/reset-default-colors ()
+  "Reset any explicitly defined reset values in `emacs-solo-avoid-flash-options`."
+  (when (alist-get 'enabled emacs-solo-avoid-flash-options)
+    (let ((bg (alist-get 'reset-background emacs-solo-avoid-flash-options))
+          (fg (alist-get 'reset-foreground emacs-solo-avoid-flash-options)))
+      (when bg
+        (set-face-attribute 'default nil :background bg))
+      (when fg
+        (set-face-attribute 'default nil :foreground fg)))))
+
+(emacs-solo/avoid-initial-flash-of-light)
+(add-hook 'after-init-hook #'emacs-solo/reset-default-colors)
+
+;; ;; Always start Emacs and new frames maximized
+;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;; Single VC backend inscreases booting speed
+(setq vc-handled-backends '(Git))
+
+;;; -------------------- PERFORMANCE & HACKS
+;; HACK: inscrease startup speed
+
+;; Delay garbage collection while Emacs is booting
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6)
+
+;; Schedule garbage collection sensible defaults for after booting
+(add-hook 'after-init-hook
+          (lambda ()
+            (setq gc-cons-threshold (* 100 1024 1024)
+                  gc-cons-percentage 0.1)))
+
+;; Single VC backend inscreases booting speed
+(setq vc-handled-backends '(Git))
+
+;; Do not native compile if on battery power
+(setopt native-comp-async-on-battery-power nil) ; EMACS-31
+
 
 ;; Better Window Management handling
 (setq frame-resize-pixelwise t
@@ -41,6 +92,22 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 
+(setq inhibit-compacting-font-caches t)
+
+;; Disables unused UI Elements
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'tooltip-mode) (tooltip-mode -1))
+(if (fboundp 'fringe-mode) (fringe-mode -1))
+
+;; Avoid raising the *Messages* buffer if anything is still without
+;; lexical bindings
+(setq warning-minimum-level :error)
+(setq warning-suppress-types '((lexical-binding)))
+
+
+;;;;; PACKAGE 
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -85,14 +152,14 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
-(defun my/disable-gui-things (frame)
-  (when (display-graphic-p frame)
-    (with-selected-frame frame
-      (scroll-bar-mode -1)
-      (tool-bar-mode -1)
-      (menu-bar-mode -1))))
+;; (defun my/disable-gui-things (frame)
+;;   (when (display-graphic-p frame)
+;;     (with-selected-frame frame
+;;       (scroll-bar-mode -1)
+;;       (tool-bar-mode -1)
+;;       (menu-bar-mode -1))))
 
-(add-hook 'after-make-frame-functions #'my/disable-gui-things)
+;; (add-hook 'after-make-frame-functions #'my/disable-gui-things)
 
 (provide 'early-init)
 ;;; early-init.el ends here
