@@ -23,7 +23,6 @@
   (file-name-shadow-mode 1) ; allows us to type a new path without having to delete the current one
   (with-current-buffer (get-buffer-create "*scratch*")
     (insert (format ";;
-;;
 ;;   Loading time : %s
 ;;   Packages     : %s
 ;;
@@ -50,17 +49,18 @@
    ("C-M-." . rg-dwim-project-dir)
    )
   :custom
+  (treesit-font-lock-level 4)
   (completion-ignore-case t)
   (delete-by-moving-to-trash t)
   (ispell-dictionary "en_US")
-  (create-lockfiles nil)   ; No backup files
-  (make-backup-files nil)  ; No backup files
-  (backup-inhibited t)     ; No backup files
   (xref-search-program 'ripgrep)
   (grep-command "rg -nS --no-heading ")
   (global-auto-revert-non-file-buffers t)
   (dired-dwim-target t)
   (comp-async-report-warnings-errors nil)
+  (dired-kill-when-opening-new-dired-buffer t)
+  (windmove-default-keybindings 'shift)
+  (framemove-hook-into-windmove t)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (ad-redefinition-action 'accept)
   (auto-save-default t)
@@ -83,8 +83,8 @@
   (browse-url-secondary-browser-function 'eww-browse-url) ; C-u C-c RET on URLs open in EWW
   (help-window-select t)
   (history-length 300)
-  ;; (inhibit-startup-message t)
-  ;; (initial-scratch-message "")
+  (inhibit-startup-message t)
+  (initial-scratch-message "")
   (ibuffer-human-readable-size t) ; EMACS-31
   (ispell-dictionary "en_US")
   (kill-do-not-save-duplicates t)
@@ -358,7 +358,6 @@
 (use-package auto-compile
   :config (auto-compile-on-load-mode))
 
-
 ;; (set-face-attribute 'default nil :font "Blex Mono Nerd Font" :height 200)
 ;; (set-face-attribute 'default nil :font "Iosevka NF" :height 200)
 ;; (set-face-attribute 'default nil :font "Iosevka NF")
@@ -376,38 +375,24 @@
 
 (add-hook 'after-make-frame-functions #'zt/set-default-font)
 
-
-(use-package no-littering)
-;; (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
-(setq make-backup-files nil)
-
 (use-package which-key
   :init (which-key-mode)
   :diminish which-key-mode
   :config
   (setq which-key-idle-delay 0.1))
 
-
 (use-package diredfl
   :hook (dired-mode . diredfl-mode))
 
-(use-package recentf
-  :config
-  (setq recentf-auto-cleanup 'never
-        recentf-max-saved-items 1000
-        recentf-save-file (concat user-emacs-directory ".recentf"))
-  (recentf-mode t)
-  :diminish nil)
-
+;; (use-package recentf
+;;   :config
+;;   (setq recentf-auto-cleanup 'never
+;;         recentf-max-saved-items 1000
+;;         recentf-save-file (concat user-emacs-directory ".recentf"))
+;;   (recentf-mode t)
+;;   :diminish nil)
 
 (set-default-coding-systems 'utf-8)
-
-;; (use-package dashboard
-;;   :config
-;;   (dashboard-setup-startup-hook)
-;;   )
-
-(setq treesit-font-lock-level 4)
 
 (use-package ripgrep)
 
@@ -487,37 +472,6 @@
 ;;   )
 (setq org-agenda-files '("/mnt/nas/org/agenda/"))
 
-(add-hook 'shell-mode-hook 'compilation-shell-minor-mode)
-
-;; (modify-syntax-entry ?_ "w")
-
-;; ;; Define the whitespace style.
-;; (setq-default whitespace-style
-;;               '(face spaces empty tabs newline trailing space-mark tab-mark newline-mark))
-;; ;; Whitespace color corrections.
-;; (require 'color)
-;; (let* ((ws-lighten 30) ;; Amount in percentage to lighten up black.
-;;        (ws-color (color-lighten-name "#000000" ws-lighten)))
-;;   (custom-set-faces
-;;    `(whitespace-newline                ((t (:foreground ,ws-color))))
-;;    `(whitespace-missing-newline-at-eof ((t (:foreground ,ws-color))))
-;;    `(whitespace-space                  ((t (:foreground ,ws-color))))
-;;    `(whitespace-space-after-tab        ((t (:foreground ,ws-color))))
-;;    `(whitespace-space-before-tab       ((t (:foreground ,ws-color))))
-;;    `(whitespace-tab                    ((t (:foreground ,ws-color))))
-;;    `(whitespace-trailing               ((t (:foreground ,ws-color))))))
-;; ;; Make these characters represent whitespace.
-;; (setq-default whitespace-display-mappings
-;;               '(
-;;                 ;; space -> · else .
-;;                 (space-mark 32 [183] [46])
-;;                 ;; new line -> ¬ else $
-;;                 (newline-mark ?\n [172 ?\n] [36 ?\n])
-;;                 ;; carriage return (Windows) -> ¶ else #
-;;                 (newline-mark ?\r [182] [35])
-;;                 ;; tabs -> » else >
-;;                 (tab-mark ?\t [187 ?\t] [62 ?\t])))
-
 
 (use-package yasnippet
   :ensure t
@@ -536,42 +490,12 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-always-indent 'complete)
 
-(use-package capf-autosuggest
-  :config
-  (add-hook 'comint-mode-hook #'capf-autosuggest-mode)
-  (add-hook 'eshell-mode-hook #'capf-autosuggest-mode)
-  )
-
-(setq tab-bar-close-button-show nil
-      tab-bar-new-button-show nil)
-
-(use-package virtualenvwrapper
-  :ensure t
-  :config
-  (venv-initialize-interactive-shells)
-  (venv-initialize-eshell)
-  )
-
-(windmove-default-keybindings 'shift)
-(setq framemove-hook-into-windmove t)
-
-(use-package rg
-  :config
-  (rg-enable-default-bindings)
-)
-
-;; (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
-
-(use-package envrc
-  :config
-  (envrc-global-mode)
-  )
-
-;; (use-package exec-path-from-shell
+;; (use-package virtualenvwrapper
+;;   :ensure t
 ;;   :config
-;;   (when (daemonp)
-;;   (exec-path-from-shell-initialize)))
-;; (add-to-list 'exec-path "~/.cargo/bin")
+;;   (venv-initialize-interactive-shells)
+;;   (venv-initialize-eshell)
+;;   )
 
 ;;; │ EMACS-SOLO-EXEC-PATH-FROM-SHELL
 ;;
@@ -612,19 +536,6 @@ This works with bash, zsh, or fish)."
 
   (add-hook 'after-init-hook #'emacs-solo/set-exec-path-from-shell-PATH))
 
-
-;; (require 'ansi-color)
-;; (defun my/ansi-colorize-buffer ()
-;;   (let ((buffer-read-only nil))
-;;     (ansi-color-apply-on-region (point-min) (point-max))))
-;; (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
-
-(setq dired-kill-when-opening-new-dired-buffer t)
-
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-
-(use-package devicetree-ts-mode)
-
 (setq gnus-select-method
       '(nntp "news.gwene.org"))
 
@@ -632,7 +543,21 @@ This works with bash, zsh, or fish)."
  :config
  (direnv-mode))
 
+(use-package envrc
+  :config
+  (envrc-global-mode))
 
+(use-package rg
+  :config
+  (rg-enable-default-bindings))
+
+(add-hook 'shell-mode-hook 'compilation-shell-minor-mode)
+(use-package capf-autosuggest
+  :config
+  (add-hook 'comint-mode-hook #'capf-autosuggest-mode)
+  (add-hook 'eshell-mode-hook #'capf-autosuggest-mode))
+
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'zt-themes)
 (require 'zt-icons)
 (require 'zt-lsp)
@@ -652,6 +577,5 @@ This works with bash, zsh, or fish)."
 (require 'zt-notes)
 (require 'zt-window)
 (require 'zt-highlight)
-
 
 ;; LOOK into jinx emacs packages
