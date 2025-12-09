@@ -311,7 +311,6 @@
   :mode "\\.nix\\'")
 
 
-
 (use-package savehist
   :init
   (savehist-mode))
@@ -338,15 +337,6 @@
      ;; orderless-without-literal          ; Recommended for dispatches instead
      ))
   )
-
-
-
-;; A few more useful configurations...
-(defun zt-toggle-window-dedication ()
-  "Toggles window dedication in the selected window."
-  (interactive)
-  (set-window-dedicated-p (selected-window)
-                          (not (window-dedicated-p (selected-window)))))
 
 (add-hook 'shell-mode-hook 'compilation-shell-minor-mode)
 
@@ -382,10 +372,6 @@
                 ;; tabs -> » else >
                 (tab-mark ?\t [187 ?\t] [62 ?\t])))
 
-;; (use-package undo-tree
-;;   :ensure t
-;;   :init
-;;   (global-undo-tree-mode))
 
 (use-package yasnippet
   :ensure t
@@ -397,11 +383,6 @@
   (setq yas-snippet-dir "~/.emacs.d/snippets"))
 
 (use-package yasnippet-snippets)
-
-(use-package beacon
-  :config
-  (beacon-mode 0)
-  )
 
 (setq c-set-offset 2)
 (setq-default tab-width 4)
@@ -425,12 +406,6 @@
   (venv-initialize-eshell)
   )
 
-;; Consult users will also want the embark-consult package.
-(use-package embark-consult
-  :ensure t ; only need to install it, embark loads it after consult if found
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
-
 (windmove-default-keybindings 'shift)
 (setq framemove-hook-into-windmove t)
 
@@ -438,27 +413,6 @@
   :config
   (rg-enable-default-bindings)
 )
-
-;; Sample executable configuration
-;; (use-package plantuml-mode
-;;   :init
-;;   (setq plantuml-executable-path "/usr/bin/plantuml")
-;;   (setq plantuml-default-exec-mode 'executable)
-;;   ;; Enable plantuml-mode for PlantUML files
-;;   (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
-;;   (add-to-list
-;;   'org-src-lang-modes '("plantuml" . plantuml))
-;;   (setq org-plantuml-exec-mode 'plantuml)
-;;   )
-
-
-;; (use-package ace-window
-;;   :bind (("C-M-S-o" . ace-window))
-;;   :custom
-;;   (aw-scope 'global)
-;;   (aw-keys '(?n ?e ?i ?o ?t ?s ?r ?a))
-;;   (aw-minibuffer-flags t)
-;;   )
 
 (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
 
@@ -473,15 +427,13 @@
   (exec-path-from-shell-initialize)))
 (add-to-list 'exec-path "~/.cargo/bin")
 
-(require 'ansi-color)
-(defun my/ansi-colorize-buffer ()
-  (let ((buffer-read-only nil))
-    (ansi-color-apply-on-region (point-min) (point-max))))
-(add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
-
+;; (require 'ansi-color)
+;; (defun my/ansi-colorize-buffer ()
+;;   (let ((buffer-read-only nil))
+;;     (ansi-color-apply-on-region (point-min) (point-max))))
+;; (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
 
 (setq dired-kill-when-opening-new-dired-buffer t)
-
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
@@ -506,12 +458,13 @@
 (require 'zt-git)
 (require 'zt-custom-commands)
 (require 'zt-display-buffer-alist)
-(require 'zt-ai)
+;; (require 'zt-ai)
 (require 'zt-utils)
 (require 'zt-projects)
 (require 'zt-notes)
 (require 'zt-window)
 (require 'zt-highlight)
+
 
 ;; LOOK into jinx emacs packages
 

@@ -15,4 +15,7 @@
   (global-git-gutter-mode t)
   )
 
+;;emacs solo buffer gutter?
+
+
 (provide 'zt-git)
