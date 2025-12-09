@@ -120,6 +120,20 @@ With CHOOSE-ENGINE (prefix arg), prompt for a search engine template first."
       (browse-url (format zt/web-search-engine
                           (url-hexify-string query))))))
 
+;;; │ WEBJUMP
+(use-package webjump
+  :defer t
+  :ensure nil
+  :straight nil
+  :bind ("C-x /" . webjump)
+  :custom
+  (webjump-sites
+   '(("DuckDuckGo" . [simple-query "www.duckduckgo.com" "www.duckduckgo.com/?q=" ""])
+     ("Google" . [simple-query "www.google.com" "www.google.com/search?q=" ""])
+     ("YouTube" . [simple-query "www.youtube.com/feed/subscriptions" "www.youtube.com/results?search_query=" ""])
+     ("ChatGPT" . [simple-query "https://chatgpt.com" "https://chatgpt.com/?q=" ""]))))
+
+
 
 (provide 'zt-utils)
 
