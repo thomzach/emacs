@@ -1,4 +1,3 @@
-
 ;; Initialize package sources
 (use-package emacs
   :ensure nil
@@ -36,8 +35,11 @@
   (select-frame-set-input-focus (selected-frame))
   (savehist-mode 1)
   (save-place-mode 1)
-  (winner-mode)  
-  )
+  (winner-mode)
+  ;; Save manual customizations to other file than init.el
+  (setq custom-file (locate-user-emacs-file "custom-vars.el")))
+
+  (load custom-file 'noerror 'nomessage)
 
 ;;; COMPILATION
 (use-package compile
@@ -60,8 +62,7 @@
 ;; Revert Dired and other buffers
 (setq global-auto-revert-non-file-buffers t)
 (setq dired-dwim-target t)
-(setq custom-file "~/.emacs.d/custom-file.el")
-(load-file custom-file)
+
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -110,10 +111,10 @@
 
 (set-default-coding-systems 'utf-8)
 
-(use-package dashboard
-  :config
-  (dashboard-setup-startup-hook)
-  )
+;; (use-package dashboard
+;;   :config
+;;   (dashboard-setup-startup-hook)
+;;   )
 
 (setq treesit-font-lock-level 4)
 
@@ -122,11 +123,6 @@
 (blink-cursor-mode -1)
 (setq scroll-margin 5)
 (setq scroll-conservatively 100)
-
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-              (ggtags-mode 1))))
 
 ;; (use-package dumb-jump
 ;;   :config
@@ -192,8 +188,8 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (add-hook 'ibuffer-mode-hook
-	      #'(lambda ()
-	          (ibuffer-auto-mode 1)))
+          #'(lambda ()
+              (ibuffer-auto-mode 1)))
 
 
 (use-package async)
@@ -215,7 +211,7 @@
                ("emacs" (or
                          (name . "^\\*scratch\\*$")
                          (name . "^\\*Messages\\*$")))
-		       ("pdfs" (name . "\\.pdf"))
+               ("pdfs" (name . "\\.pdf"))
                ))))
 
 (require 'ibuf-ext)
@@ -224,44 +220,36 @@
           (lambda ()
             (ibuffer-switch-to-saved-filter-groups "default")))
 
-(use-package savehist
-  :init
-  (savehist-mode))
-
-
 (add-hook 'shell-mode-hook 'compilation-shell-minor-mode)
-
-(fset 'perl-mode 'cperl-mode)
-(setq cperl-invalid-face nil)
 
 ;; (modify-syntax-entry ?_ "w")
 
-;; Define the whitespace style.
-(setq-default whitespace-style
-              '(face spaces empty tabs newline trailing space-mark tab-mark newline-mark))
-;; Whitespace color corrections.
-(require 'color)
-(let* ((ws-lighten 30) ;; Amount in percentage to lighten up black.
-       (ws-color (color-lighten-name "#000000" ws-lighten)))
-  (custom-set-faces
-   `(whitespace-newline                ((t (:foreground ,ws-color))))
-   `(whitespace-missing-newline-at-eof ((t (:foreground ,ws-color))))
-   `(whitespace-space                  ((t (:foreground ,ws-color))))
-   `(whitespace-space-after-tab        ((t (:foreground ,ws-color))))
-   `(whitespace-space-before-tab       ((t (:foreground ,ws-color))))
-   `(whitespace-tab                    ((t (:foreground ,ws-color))))
-   `(whitespace-trailing               ((t (:foreground ,ws-color))))))
-;; Make these characters represent whitespace.
-(setq-default whitespace-display-mappings
-              '(
-                ;; space -> · else .
-                (space-mark 32 [183] [46])
-                ;; new line -> ¬ else $
-                (newline-mark ?\n [172 ?\n] [36 ?\n])
-                ;; carriage return (Windows) -> ¶ else #
-                (newline-mark ?\r [182] [35])
-                ;; tabs -> » else >
-                (tab-mark ?\t [187 ?\t] [62 ?\t])))
+;; ;; Define the whitespace style.
+;; (setq-default whitespace-style
+;;               '(face spaces empty tabs newline trailing space-mark tab-mark newline-mark))
+;; ;; Whitespace color corrections.
+;; (require 'color)
+;; (let* ((ws-lighten 30) ;; Amount in percentage to lighten up black.
+;;        (ws-color (color-lighten-name "#000000" ws-lighten)))
+;;   (custom-set-faces
+;;    `(whitespace-newline                ((t (:foreground ,ws-color))))
+;;    `(whitespace-missing-newline-at-eof ((t (:foreground ,ws-color))))
+;;    `(whitespace-space                  ((t (:foreground ,ws-color))))
+;;    `(whitespace-space-after-tab        ((t (:foreground ,ws-color))))
+;;    `(whitespace-space-before-tab       ((t (:foreground ,ws-color))))
+;;    `(whitespace-tab                    ((t (:foreground ,ws-color))))
+;;    `(whitespace-trailing               ((t (:foreground ,ws-color))))))
+;; ;; Make these characters represent whitespace.
+;; (setq-default whitespace-display-mappings
+;;               '(
+;;                 ;; space -> · else .
+;;                 (space-mark 32 [183] [46])
+;;                 ;; new line -> ¬ else $
+;;                 (newline-mark ?\n [172 ?\n] [36 ?\n])
+;;                 ;; carriage return (Windows) -> ¶ else #
+;;                 (newline-mark ?\r [182] [35])
+;;                 ;; tabs -> » else >
+;;                 (tab-mark ?\t [187 ?\t] [62 ?\t])))
 
 
 (use-package yasnippet
@@ -305,18 +293,58 @@
   (rg-enable-default-bindings)
 )
 
-(setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
+;; (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
 
 (use-package envrc
   :config
   (envrc-global-mode)
   )
 
-(use-package exec-path-from-shell
-  :config
-  (when (daemonp)
-  (exec-path-from-shell-initialize)))
-(add-to-list 'exec-path "~/.cargo/bin")
+;; (use-package exec-path-from-shell
+;;   :config
+;;   (when (daemonp)
+;;   (exec-path-from-shell-initialize)))
+;; (add-to-list 'exec-path "~/.cargo/bin")
+
+;;; │ EMACS-SOLO-EXEC-PATH-FROM-SHELL
+;;
+;;  Loads users default shell PATH settings into Emacs. Usefull
+;;  when calling Emacs directly from GUI systems.
+;;
+(use-package emacs-solo-exec-path-from-shell
+  :ensure nil
+  :straight nil
+  :no-require t
+  :defer t
+  :init
+  (defun emacs-solo/set-exec-path-from-shell-PATH ()
+    "Set up Emacs' `exec-path' and PATH environment the same as the user's shell.
+This works with bash, zsh, or fish)."
+    (interactive)
+    (let* ((shell (getenv "SHELL"))
+           (shell-name (file-name-nondirectory shell))
+           (command
+            (cond
+             ((string= shell-name "fish")
+              "fish -c 'string join : $PATH'")
+             ((string= shell-name "zsh")
+              "zsh -i -c 'printenv PATH'")
+             ((string= shell-name "bash")
+              "bash --login -c 'echo $PATH'")
+             (t nil))))
+      (if (not command)
+          (message "emacs-solo: Unsupported shell: %s" shell-name)
+        (let ((path-from-shell
+               (replace-regexp-in-string
+                "[ \t\n]*$" ""
+                (shell-command-to-string command))))
+          (when (and path-from-shell (not (string= path-from-shell "")))
+            (setenv "PATH" path-from-shell)
+            (setq exec-path (split-string path-from-shell path-separator))
+            (message ">>> emacs-solo: PATH loaded from %s" shell-name))))))
+
+  (add-hook 'after-init-hook #'emacs-solo/set-exec-path-from-shell-PATH))
+
 
 ;; (require 'ansi-color)
 ;; (defun my/ansi-colorize-buffer ()
@@ -337,9 +365,11 @@
  :config
  (direnv-mode))
 
+
 (require 'zt-themes)
 (require 'zt-icons)
 (require 'zt-lsp)
+(require 'zt-treesit)
 (require 'zt-org)
 (require 'zt-minibuffer)
 (require 'zt-completion)
@@ -358,4 +388,3 @@
 
 
 ;; LOOK into jinx emacs packages
-
