@@ -555,23 +555,23 @@ Opening and closing delimiters will have matching colors."
   )
 
 ;;
-(column-number-mode)
+;; (column-number-mode)
 
-(dolist (mode '(org-mode-hook
-                term-mode-hook
-                vterm-mode-hook
-                shell-mode-hook
-                treemacs-mode-hook
-                eshell-mode-hook))
-  (add-hook mode (lambda() (display-line-numbers-mode 0))))
+;; (dolist (mode '(org-mode-hook
+;;                 term-mode-hook
+;;                 vterm-mode-hook
+;;                 shell-mode-hook
+;;                 treemacs-mode-hook
+;;                 eshell-mode-hook))
+;;   (add-hook mode (lambda() (display-line-numbers-mode 0))))
 
-(global-display-line-numbers-mode t)
-(setq display-line-numbers-type 'relative)
-(dolist (mode '(
-		        term-mode-hook
-		        pdf-view-mode-hook
-		        eshell-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+;; (global-display-line-numbers-mode t)
+;; (setq display-line-numbers-type 'relative)
+;; (dolist (mode '(
+;; 		        term-mode-hook
+;; 		        pdf-view-mode-hook
+;; 		        eshell-mode-hook))
+;;   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 
 (provide 'zt-themes)
