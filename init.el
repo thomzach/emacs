@@ -611,5 +611,10 @@ This works with bash, zsh, or fish)."
 (require 'zt-notes)
 (require 'zt-window)
 (require 'zt-highlight)
+(require 'zt-vc)
+
+;; (require 'zt-diff)
+;; (require 'zt-eshell)
+;; (require 'zt-eglot)
 
 ;; LOOK into jinx emacs packages
