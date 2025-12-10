@@ -1,5 +1,5 @@
 (defcustom emacs-solo-enabled-icons
-  '(dired eshell ibuffer)
+  '(dired eshell ibuffer nerd)
   "List of Emacs Solo icon features that are enabled."
   :type '(set :tag "Enabled Emacs Solo icon features"
               (const :tag "Dired Icons" dired)
