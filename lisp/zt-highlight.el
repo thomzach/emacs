@@ -1,3 +1,8 @@
+(defcustom emacs-solo-enable-highlight-keywords t
+  "Enable `emacs-solo-enable-highlight-keywords'."
+  :type 'boolean
+  :group 'emacs-solo)
+
 ;;; │ EMACS-SOLO-HIGHLIGHT-KEYWORDS-MODE
 ;;
 ;;  Highlights a list of words like TODO, FIXME...
