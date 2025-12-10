@@ -166,6 +166,7 @@ With CHOOSE-ENGINE (prefix arg), prompt for a search engine template first."
 ;;
 (use-package emacs-solo-how-in
   :ensure nil
+  :straight nil
   :no-require t
   :defer t
   :init

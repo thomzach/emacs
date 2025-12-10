@@ -539,7 +539,7 @@ This works with bash, zsh, or fish)."
 ;; Adds closing brackets
 (use-package electric-pair
   :ensure nil
-  :staright nil
+  :straight nil
   :defer
   :hook (after-init-hook . electric-pair-mode))
 

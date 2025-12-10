@@ -247,4 +247,4 @@ The completion candidates include the Git status of each file."
   ;; Switch-buffer between modified files
   (global-set-key (kbd "C-x C-g") 'emacs-solo/switch-git-status-buffer))
 
-(provide 'zt-vc.el)
+(provide 'zt-vc)
