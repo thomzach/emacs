@@ -534,6 +534,42 @@ This works with bash, zsh, or fish)."
 
   (add-hook 'after-init-hook #'emacs-solo/set-exec-path-from-shell-PATH))
 
+
+;;; │ ELECTRIC-PAIR
+;; Adds closing brackets
+(use-package electric-pair
+  :ensure nil
+  :staright nil
+  :defer
+  :hook (after-init-hook . electric-pair-mode))
+
+;;; │ PAREN
+;; Shows matching parthesis
+(use-package paren
+  :ensure nil
+  :straight nil
+  :hook (after-init-hook . show-paren-mode)
+  :custom
+  (show-paren-delay 0)
+  (show-paren-style 'mixed)
+  (show-paren-context-when-offscreen t)) ;; show matches within window splits
+
+;;; │ TIME
+(use-package time
+  :ensure nil
+  :straight nil
+  :hook (after-init-hook . display-time-mode) ;; If we'd like to see it on the mode-line
+  :custom
+  (world-clock-time-format "%A %d %B %r %Z")
+  (world-clock-sort-order "%FT%T") ; EMACS-31
+  (display-time-day-and-date t)
+  (display-time-default-load-average nil)
+  (display-time-mail-string "")
+  (zoneinfo-style-world-list                ; use `M-x worldclock RET' to see it
+   '(("America/Chicago" "Chicago"))))
+
+
+
 (setq gnus-select-method
       '(nntp "news.gwene.org"))
 
