@@ -612,9 +612,9 @@ This works with bash, zsh, or fish)."
 (require 'zt-window)
 (require 'zt-highlight)
 (require 'zt-vc)
+(require 'zt-diff)
 
-;; (require 'zt-diff)
 ;; (require 'zt-eshell)
-;; (require 'zt-eglot)
+;; (require 'zt-eglot) ;; zt-lsp has eglot currently
 
 ;; LOOK into jinx emacs packages
