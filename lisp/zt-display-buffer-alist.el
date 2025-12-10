@@ -83,6 +83,7 @@
 ;;; │ WINDOW
 (use-package window
   :ensure nil
+  :straight nil
   :custom
   (display-buffer-alist
    '(("\\*\\(Backtrace\\|Warnings\\|Compile-Log\\|Messages\\|Bookmark List\\|Occur\\|eldoc\\)\\*"
@@ -115,6 +116,10 @@
       (window-height . 0.25)
       (side . bottom)
       (slot . 3))
+     ("\\*compilation\\*"
+      (display-buffer-reuse-mode-window
+       display-buffer-below-selected)
+      (window-height . 0.5))
      )))
 
 
