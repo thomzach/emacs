@@ -56,9 +56,7 @@
   (xref-search-program 'ripgrep)
   (grep-command "rg -nS --no-heading ")
   (global-auto-revert-non-file-buffers t)
-  (dired-dwim-target t)
   (comp-async-report-warnings-errors nil)
-  (dired-kill-when-opening-new-dired-buffer t)
   (windmove-default-keybindings 'shift)
   (framemove-hook-into-windmove t)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
