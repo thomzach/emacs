@@ -203,13 +203,13 @@
   (setq auto-save-list-file-prefix (expand-file-name "cache/auto-saves/sessions/" user-emacs-directory)
         auto-save-file-name-transforms `((".*" ,(expand-file-name "cache/auto-saves/" user-emacs-directory) t)))
 
-  ;; TERMs should use the entire window space
-  (defun emacs-solo/disable-global-scrolling-in-ansi-term ()
-    "Disable global scrolling behavior in ansi-term buffers."
-    (setq-local scroll-conservatively 101)
-    (setq-local scroll-margin 0)
-    (setq-local scroll-step 0))
-  (add-hook 'term-mode-hook #'emacs-solo/disable-global-scrolling-in-ansi-term)
+  ;; ;; TERMs should use the entire window space
+  ;; (defun emacs-solo/disable-global-scrolling-in-ansi-term ()
+  ;;   "Disable global scrolling behavior in ansi-term buffers."
+  ;;   (setq-local scroll-conservatively 101)
+  ;;   (setq-local scroll-margin 0)
+  ;;   (setq-local scroll-step 0))
+  ;; (add-hook 'term-mode-hook #'emacs-solo/disable-global-scrolling-in-ansi-term)
 
   ;; TRAMP specific HACKs
   ;; See https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
@@ -449,16 +449,16 @@
 ;; warn when opening files bigger than 100MB
 (setq large-file-warning-threshold 100000000)
 
-(when (eq system-type 'windows-nt)
-  (setq browse-url-browser-function 'browse-url-generic
-        browse-url-generic-program "C:/Program Files/Google/Chrome/Application/chrome.exe")
-  )
-(when (eq system-type 'gnu/linux)
-  (setq browse-url-browser-function 'browse-url-generic
-        browse-url-generic-program (if (string-match-p "Windows" (getenv "PATH"))
-                                       "/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
-                                     "thorium-browser"))
-  )
+;; (when (eq system-type 'windows-nt)
+;;   (setq browse-url-browser-function 'browse-url-generic
+;;         browse-url-generic-program "C:\\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
+;;   )
+;; (when (eq system-type 'gnu/linux)
+;;   (setq browse-url-browser-function 'browse-url-generic
+;;         browse-url-generic-program (if (string-match-p "Windows" (getenv "PATH"))
+;;                                        "/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
+;;                                      "thorium-browser"))
+;;   )
 
 (use-package async)
 
@@ -500,39 +500,39 @@
 ;;  Loads users default shell PATH settings into Emacs. Usefull
 ;;  when calling Emacs directly from GUI systems.
 ;;
-(use-package emacs-solo-exec-path-from-shell
-  :ensure nil
-  :straight nil
-  :no-require t
-  :defer t
-  :init
-  (defun emacs-solo/set-exec-path-from-shell-PATH ()
-    "Set up Emacs' `exec-path' and PATH environment the same as the user's shell.
-This works with bash, zsh, or fish)."
-    (interactive)
-    (let* ((shell (getenv "SHELL"))
-           (shell-name (file-name-nondirectory shell))
-           (command
-            (cond
-             ((string= shell-name "fish")
-              "fish -c 'string join : $PATH'")
-             ((string= shell-name "zsh")
-              "zsh -i -c 'printenv PATH'")
-             ((string= shell-name "bash")
-              "bash --login -c 'echo $PATH'")
-             (t nil))))
-      (if (not command)
-          (message "emacs-solo: Unsupported shell: %s" shell-name)
-        (let ((path-from-shell
-               (replace-regexp-in-string
-                "[ \t\n]*$" ""
-                (shell-command-to-string command))))
-          (when (and path-from-shell (not (string= path-from-shell "")))
-            (setenv "PATH" path-from-shell)
-            (setq exec-path (split-string path-from-shell path-separator))
-            (message ">>> emacs-solo: PATH loaded from %s" shell-name))))))
+;; (use-package emacs-solo-exec-path-from-shell
+;;   :ensure nil
+;;   :straight nil
+;;   :no-require t
+;;   :defer t
+;;   :init
+;;   (defun emacs-solo/set-exec-path-from-shell-PATH ()
+;;     "Set up Emacs' `exec-path' and PATH environment the same as the user's shell.
+;; This works with bash, zsh, or fish)."
+;;     (interactive)
+;;     (let* ((shell (getenv "SHELL"))
+;;            (shell-name (file-name-nondirectory shell))
+;;            (command
+;;             (cond
+;;              ((string= shell-name "fish")
+;;               "fish -c 'string join : $PATH'")
+;;              ((string= shell-name "zsh")
+;;               "zsh -i -c 'printenv PATH'")
+;;              ((string= shell-name "bash")
+;;               "bash --login -c 'echo $PATH'")
+;;              (t nil))))
+;;       (if (not command)
+;;           (message "emacs-solo: Unsupported shell: %s" shell-name)
+;;         (let ((path-from-shell
+;;                (replace-regexp-in-string
+;;                 "[ \t\n]*$" ""
+;;                 (shell-command-to-string command))))
+;;           (when (and path-from-shell (not (string= path-from-shell "")))
+;;             (setenv "PATH" path-from-shell)
+;;             (setq exec-path (split-string path-from-shell path-separator))
+;;             (message ">>> emacs-solo: PATH loaded from %s" shell-name))))))
 
-  (add-hook 'after-init-hook #'emacs-solo/set-exec-path-from-shell-PATH))
+;;   (add-hook 'after-init-hook #'emacs-solo/set-exec-path-from-shell-PATH))
 
 
 ;;; │ ELECTRIC-PAIR
@@ -573,9 +573,9 @@ This works with bash, zsh, or fish)."
 (setq gnus-select-method
       '(nntp "news.gwene.org"))
 
-(use-package direnv
- :config
- (direnv-mode))
+;; (use-package direnv
+;;  :config
+;;  (direnv-mode))
 
 (use-package envrc
   :config
@@ -594,7 +594,7 @@ This works with bash, zsh, or fish)."
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'zt-themes)
 (require 'zt-icons)
-(require 'zt-lsp)
+;; (require 'zt-lsp)
 (require 'zt-treesit)
 (require 'zt-org)
 (require 'zt-minibuffer)
@@ -605,16 +605,14 @@ This works with bash, zsh, or fish)."
 (require 'zt-git)
 (require 'zt-custom-commands)
 (require 'zt-display-buffer-alist)
-;; (require 'zt-ai)
 (require 'zt-utils)
 (require 'zt-projects)
 (require 'zt-notes)
 (require 'zt-window)
 (require 'zt-highlight)
-(require 'zt-vc)
+;; (require 'zt-vc)
 (require 'zt-diff)
-
 ;; (require 'zt-eshell)
-;; (require 'zt-eglot) ;; zt-lsp has eglot currently
+(require 'zt-eglot) ;; zt-lsp has eglot currently
 
 ;; LOOK into jinx emacs packages

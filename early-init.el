@@ -5,6 +5,7 @@
 ;;
 ;;; Code:
 
+(setq package-enable-at-startup nil)
 
 (defcustom emacs-solo-avoid-flash-options
   '((enabled . t)
@@ -105,7 +106,6 @@ If reset values are nil, nothing is reset."
 ;; lexical bindings
 (setq warning-minimum-level :error)
 (setq warning-suppress-types '((lexical-binding)))
-
 
 ;;;;; PACKAGE 
 
