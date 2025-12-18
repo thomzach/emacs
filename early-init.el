@@ -134,6 +134,7 @@ If reset values are nil, nothing is reset."
 (use-package eglot
   :straight (:type built-in))
 
+(setq use-package-always-defer t)
 
 (require 'package)
 
