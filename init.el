@@ -360,7 +360,7 @@
 ;; (set-face-attribute 'default nil :font "Iosevka NF" :height 200)
 ;; (set-face-attribute 'default nil :font "Iosevka NF")
 
-(defvar zt/default-font "Iosevka NF-20"
+(defvar zt/default-font "Iosevka NF-12"
   "My preferred default font for graphical Emacs frames.")
 
 (when (display-graphic-p)
