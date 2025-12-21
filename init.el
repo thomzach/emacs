@@ -429,8 +429,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.c\\'" . c-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c-ts-mode))
+;; (add-to-list 'auto-mode-alist '("\\.c\\'" . c-ts-mode))
+;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c-ts-mode))
 
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
@@ -613,6 +613,7 @@ This works with bash, zsh, or fish)."
 (require 'zt-highlight)
 (require 'zt-vc)
 (require 'zt-diff)
+(require 'zt-programming)
 
 ;; (require 'zt-eshell)
 ;; (require 'zt-eglot) ;; zt-lsp has eglot currently
