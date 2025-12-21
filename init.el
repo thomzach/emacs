@@ -618,3 +618,8 @@ This works with bash, zsh, or fish)."
 ;; (require 'zt-eglot) ;; zt-lsp has eglot currently
 
 ;; LOOK into jinx emacs packages
+(use-package multi-magit
+  :straight
+  (multi-magit :host github
+               :repo "luismbo/multi-magit"
+               :branch "master"))
