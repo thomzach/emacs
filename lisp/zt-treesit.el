@@ -35,5 +35,14 @@
   :config
   (add-to-list 'treesit-language-source-alist '(dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile" "main" "src")))
 
+(use-package c-ts-mode
+  :mode "\\.c\\'"
+  :defer t
+  :config
+  (add-to-list 'treesit-language-source-alist '(c "https://github.com/tree-sitter/tree-sitter-c.git" "master" "src")))
+
+
+(add-to-list 'treesit-extra-load-path "C:/Users/zthomas/Languages")
+;; https://github.com/emacs-tree-sitter/tree-sitter-langs
 
 (provide 'zt-treesit)

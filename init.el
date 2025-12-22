@@ -445,16 +445,14 @@
 ;; warn when opening files bigger than 100MB
 (setq large-file-warning-threshold 100000000)
 
-;; (when (eq system-type 'windows-nt)
-;;   (setq browse-url-browser-function 'browse-url-generic
-;;         browse-url-generic-program "C:\\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
-;;   )
-;; (when (eq system-type 'gnu/linux)
-;;   (setq browse-url-browser-function 'browse-url-generic
-;;         browse-url-generic-program (if (string-match-p "Windows" (getenv "PATH"))
-;;                                        "/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
-;;                                      "thorium-browser"))
-;;   )
+(when (eq system-type 'windows-nt)
+  (setq browse-url-browser-function 'browse-url-generic
+        browse-url-generic-program "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"))
+(when (eq system-type 'gnu/linux)
+  (setq browse-url-browser-function 'browse-url-generic
+        browse-url-generic-program (if (string-match-p "Windows" (getenv "PATH"))
+                                       "/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
+                                     "thorium-browser")))
 
 (use-package async)
 
