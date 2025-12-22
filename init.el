@@ -391,19 +391,15 @@
 ;;   :diminish nil)
 
 (set-default-coding-systems 'utf-8)
-
-(use-package ripgrep)
-
 (blink-cursor-mode -1)
 (setq scroll-margin 5)
 (setq scroll-conservatively 100)
 
-;; (use-package dumb-jump
-;;   :config
-;;   (setq dumb-jump-force-searcher 'rg)
-;;   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-;;   (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-;;   )
+(use-package dumb-jump
+  :config
+  (setq dumb-jump-force-searcher 'rg)
+  (add-to-list 'xref-backend-functions 'dumb-jump-xref-activate t))
+
 
 (add-to-list 'auto-mode-alist '("\\.dsc" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.inf" . conf-mode))
@@ -583,7 +579,10 @@
 
 (use-package rg
   :config
-  (rg-enable-default-bindings))
+  (rg-enable-default-bindings)
+  :custom
+  (rg-ignore-case 'smart)
+  (rg-command-line-flags '("--no-ignore")))
 
 (add-hook 'shell-mode-hook 'compilation-shell-minor-mode)
 (use-package capf-autosuggest
