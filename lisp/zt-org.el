@@ -14,6 +14,7 @@
   :hook ((org-mode . visual-line-mode)
          (org-mode . org-indent-mode)))
 
+(add-hook 'org-mode-hook #'visual-line-mode)
 (setq org-confirm-babel-evaluate nil)
 
 
