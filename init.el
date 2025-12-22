@@ -425,8 +425,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.c\\'" . c-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c-ts-mode))
+;; (add-to-list 'auto-mode-alist '("\\.c\\'" . c-ts-mode))
+;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c-ts-mode))
 
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
@@ -611,7 +611,13 @@
 (require 'zt-highlight)
 ;; (require 'zt-vc)
 (require 'zt-diff)
+(require 'zt-programming)
 ;; (require 'zt-eshell)
 (require 'zt-eglot) ;; zt-lsp has eglot currently
 
 ;; LOOK into jinx emacs packages
+(use-package multi-magit
+  :straight
+  (multi-magit :host github
+               :repo "luismbo/multi-magit"
+               :branch "master"))
