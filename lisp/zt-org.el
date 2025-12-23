@@ -12,7 +12,9 @@
 
 (use-package org
   :hook ((org-mode . visual-line-mode)
-         (org-mode . org-indent-mode)))
+         (org-mode . org-indent-mode))
+  :config
+  (setq org-return-follows-link t))
 
 (add-hook 'org-mode-hook #'visual-line-mode)
 (setq org-confirm-babel-evaluate nil)
@@ -126,6 +128,11 @@
 ;;   (setq org-ellipsis " ▼ ")
 ;;   (set-face-attribute 'org-ellipsis nil :inherit 'default :box nil))
 
-
+(setq org-link-frame-setup
+      '((vm . vm-visit-folder-other-frame)
+        (vm-imap . vm-visit-imap-folder-other-frame)
+        (gnus . org-gnus-no-new-news)
+        (file . find-file)
+        (wl . wl-other-frame)))
 
 (provide 'zt-org)
