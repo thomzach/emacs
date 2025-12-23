@@ -228,7 +228,8 @@
   (setopt tramp-persistency-file-name (expand-file-name "cache/tramp" user-emacs-directory))
 
   ;; Set line-number-mode with relative numbering
-  (setq display-line-numbers-type 'relative)
+  ;; (setq display-line-numbers-type 'relative)
+  (setq display-line-numbers-type t)
   (add-hook 'prog-mode-hook #'display-line-numbers-mode)
   (add-hook 'text-mode-hook #'display-line-numbers-mode)
 
