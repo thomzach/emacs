@@ -463,7 +463,7 @@
 ;; (when (eq system-type 'gnu/linux)
 ;;   (setq org-agenda-files '("/mnt/nas/org"))
 ;;   )
-(setq org-agenda-files '("/mnt/nas/org/agenda/"))
+;; (setq org-agenda-files '("/mnt/nas/org/agenda/"))
 
 
 (use-package yasnippet
@@ -620,3 +620,13 @@
   (multi-magit :host github
                :repo "luismbo/multi-magit"
                :branch "master"))
+
+(setq magit-repository-directories
+      `(("~/code/McuWorkspace/McuPM-050-S32K3/src" . 3)
+      ("~/code/McuWorkspace/McuPM-050-S32K3/" . 1)))
+
+(use-package perfect-margin
+  :defer nil
+  :config
+  (perfect-margin-mode t))
+
