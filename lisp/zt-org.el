@@ -1,5 +1,13 @@
+(use-package org
+  :defer nil
+  :straight nil  
+  :init
+  (add-hook 'org-mode-hook #'visual-line-mode)
+  (add-hook 'org-mode-hook #'org-indent-mode)  
+  :config
+  (setq org-return-follows-link t)
+  (setq org-directory "~/org/"))
 
-(setq org-directory "~/org/")
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
@@ -9,14 +17,7 @@
 (eval-after-load "org"
   '(require 'ox-md nil t))
 
-
-(use-package org
-  :hook ((org-mode . visual-line-mode)
-         (org-mode . org-indent-mode))
-  :config
-  (setq org-return-follows-link t))
-
-(add-hook 'org-mode-hook #'visual-line-mode)
+;; (add-hook 'org-mode-hook #'visual-line-mode)
 (setq org-confirm-babel-evaluate nil)
 
 
