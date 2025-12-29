@@ -397,10 +397,11 @@
 (setq scroll-conservatively 100)
 
 (use-package dumb-jump
+  :defer nil
   :config
   (setq dumb-jump-force-searcher 'rg)
-  (add-to-list 'xref-backend-functions 'dumb-jump-xref-activate t))
-
+  (setq xref-backend-functions (remq 'etags--xref-backend xref-backend-functions))
+  (add-to-list 'xref-backend-functions #'dumb-jump-xref-activate t))
 
 (add-to-list 'auto-mode-alist '("\\.dsc" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.inf" . conf-mode))
@@ -619,7 +620,15 @@
   :straight
   (multi-magit :host github
                :repo "luismbo/multi-magit"
-               :branch "master"))
+               :branch "master")
+  :bind
+  ("C-x G" . multi-magit-status)
+  :config
+  (magit-add-section-hook 'magit-status-sections-hook
+                        'multi-magit-insert-repos-overview
+                         nil t))
+
+
 
 (setq magit-repository-directories
       `(("~/code/McuWorkspace/McuPM-050-S32K3/src" . 3)
@@ -630,3 +639,9 @@
   :config
   (perfect-margin-mode t))
 
+
+(use-package pdf-tools
+    :defer nil
+    :straight nil)
+
+(add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
