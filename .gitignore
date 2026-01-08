@@ -2,3 +2,5 @@ custom-file.el
 .aider*
 straight/
 cache/
+eln-cache/
+elpa/
