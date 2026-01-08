@@ -32,7 +32,11 @@
   ;; Read the doc string of `denote-journal-title-format'.
   (setq denote-journal-title-format 'day-date-month-year))
 
-
+(use-package denote-agenda
+  :defer nil
+  :config
+  (setq denote-agenda-include-regexp "_project")
+  (denote-agenda-insinuate))
 
 
 (provide 'zt-notes)

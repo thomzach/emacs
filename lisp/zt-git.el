@@ -8,6 +8,7 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package git-gutter
+  :defer nil
   :config
   (setq git-gutter:modified-sign "|")
   (setq git-gutter:added-sign "|")

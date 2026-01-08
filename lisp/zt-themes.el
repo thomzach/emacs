@@ -14,7 +14,7 @@ IMPORTANT NOTE: If you disable this or choose another theme, also check
           (const :tag "Matrix" matrix))
   :group 'emacs-solo)
 
-(defcustom emacs-solo-enable-rainbown-delimiters t
+(defcustom emacs-solo-enable-rainbown-delimiters nil
   "Enable `emacs-solo-enable-rainbown-delimiters'."
   :type 'boolean
   :group 'emacs-solo)
@@ -24,20 +24,23 @@ IMPORTANT NOTE: If you disable this or choose another theme, also check
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
 
-;; (use-package rainbow-delimiters
-;;   :hook (prog-mode . rainbow-delimiters-mode)
-;;   :config
-;;   (custom-set-faces
-;;    '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "SlateBlue1"))))
-;;    '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "chartreuse4"))))
-;;    '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "medium orchid"))))
-;;    '(rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face :foreground "HotPink1"))))
-;;    '(rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face :foreground "SystemHilight"))))
-;;    '(rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face :foreground "gray55"))))
-;;    '(rainbow-delimiters-depth-7-face ((t (:inherit rainbow-delimiters-base-face :foreground "firebrick1"))))
-;;    '(rainbow-delimiters-depth-8-face ((t (:inherit rainbow-delimiters-base-face :foreground "chartreuse2"))))
-;;    '(rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face :foreground "purple3"))))
-;;    ))
+(use-package rainbow-delimiters
+  :defer nil
+  :hook (prog-mode . rainbow-delimiters-mode)
+  :config
+  (custom-set-faces
+   '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "SlateBlue1"))))
+   '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "chartreuse4"))))
+   '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "medium orchid"))))
+   '(rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face :foreground "HotPink1"))))
+   '(rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face :foreground "SystemHilight"))))
+   '(rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face :foreground "gray55"))))
+   '(rainbow-delimiters-depth-7-face ((t (:inherit rainbow-delimiters-base-face :foreground "firebrick1"))))
+   '(rainbow-delimiters-depth-8-face ((t (:inherit rainbow-delimiters-base-face :foreground "chartreuse2"))))
+   '(rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face :foreground "purple3"))))
+   ))
+
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
 ;;; │ EMACS-SOLO-RAINBOW-DELIMITERS
 ;;
@@ -45,41 +48,41 @@ IMPORTANT NOTE: If you disable this or choose another theme, also check
 ;;
 ;;  FIXME: Make it play nice with treesitter modes
 ;;
-(use-package emacs-solo-rainbow-delimiters
-  :if emacs-solo-enable-rainbown-delimiters
-  :ensure nil
-  :straight nil
-  :no-require t
-  :defer t
-  :init
-  (defun emacs-solo/rainbow-delimiters ()
-    "Apply simple rainbow coloring to parentheses, brackets, and braces in the current buffer.
-Opening and closing delimiters will have matching colors."
-    (interactive)
-    (let ((colors '(font-lock-function-name-face
-                    font-lock-builtin-face
-                    font-lock-type-face
-                    font-lock-keyword-face
-                    font-lock-variable-name-face
-                    font-lock-constant-face
-                    font-lock-string-face)))
-      (font-lock-add-keywords
-       nil
-       `((,(rx (or "(" ")" "[" "]" "{" "}"))
-          (0 (let* ((char (char-after (match-beginning 0)))
-                    (depth (save-excursion
-                             ;; Move to the correct position based on opening/closing delimiter
-                             (if (member char '(?\) ?\] ?\}))
-                                 (progn
-                                   (backward-char) ;; Move to the opening delimiter
-                                   (car (syntax-ppss)))
-                               (car (syntax-ppss)))))
-                    (face (nth (mod depth ,(length colors)) ',colors)))
-               (list 'face face)))))))
-    (font-lock-flush)
-    (font-lock-ensure))
+;; (use-package emacs-solo-rainbow-delimiters
+;;   :if emacs-solo-enable-rainbown-delimiters
+;;   :ensure nil
+;;   :straight nil
+;;   :no-require t
+;;   :defer t
+;;   :init
+;;   (defun emacs-solo/rainbow-delimiters ()
+;;     "Apply simple rainbow coloring to parentheses, brackets, and braces in the current buffer.
+;; Opening and closing delimiters will have matching colors."
+;;     (interactive)
+;;     (let ((colors '(font-lock-function-name-face
+;;                     font-lock-builtin-face
+;;                     font-lock-type-face
+;;                     font-lock-keyword-face
+;;                     font-lock-variable-name-face
+;;                     font-lock-constant-face
+;;                     font-lock-string-face)))
+;;       (font-lock-add-keywords
+;;        nil
+;;        `((,(rx (or "(" ")" "[" "]" "{" "}"))
+;;           (0 (let* ((char (char-after (match-beginning 0)))
+;;                     (depth (save-excursion
+;;                              ;; Move to the correct position based on opening/closing delimiter
+;;                              (if (member char '(?\) ?\] ?\}))
+;;                                  (progn
+;;                                    (backward-char) ;; Move to the opening delimiter
+;;                                    (car (syntax-ppss)))
+;;                                (car (syntax-ppss)))))
+;;                     (face (nth (mod depth ,(length colors)) ',colors)))
+;;                (list 'face face)))))))
+;;     (font-lock-flush)
+;;     (font-lock-ensure))
 
-  (add-hook 'prog-mode-hook #'emacs-solo/rainbow-delimiters))
+;;   (add-hook 'prog-mode-hook #'emacs-solo/rainbow-delimiters))
 
 
 ;; (use-package all-the-icons)

@@ -11,8 +11,8 @@ If the terminal buffer already exists, switch to it instead of creating a new on
       (serial-term serial-device 115200)
       (rename-buffer buffer-name t))))
 
-(use-package vterm)
-(use-package multi-vterm)
+;;(use-package vterm)
+;;(use-package multi-vterm)
 
 (straight-use-package
  '(eat :type git

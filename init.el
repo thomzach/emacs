@@ -203,13 +203,13 @@
   (setq auto-save-list-file-prefix (expand-file-name "cache/auto-saves/sessions/" user-emacs-directory)
         auto-save-file-name-transforms `((".*" ,(expand-file-name "cache/auto-saves/" user-emacs-directory) t)))
 
-  ;; TERMs should use the entire window space
-  (defun emacs-solo/disable-global-scrolling-in-ansi-term ()
-    "Disable global scrolling behavior in ansi-term buffers."
-    (setq-local scroll-conservatively 101)
-    (setq-local scroll-margin 0)
-    (setq-local scroll-step 0))
-  (add-hook 'term-mode-hook #'emacs-solo/disable-global-scrolling-in-ansi-term)
+  ;; ;; TERMs should use the entire window space
+  ;; (defun emacs-solo/disable-global-scrolling-in-ansi-term ()
+  ;;   "Disable global scrolling behavior in ansi-term buffers."
+  ;;   (setq-local scroll-conservatively 101)
+  ;;   (setq-local scroll-margin 0)
+  ;;   (setq-local scroll-step 0))
+  ;; (add-hook 'term-mode-hook #'emacs-solo/disable-global-scrolling-in-ansi-term)
 
   ;; TRAMP specific HACKs
   ;; See https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
@@ -228,7 +228,8 @@
   (setopt tramp-persistency-file-name (expand-file-name "cache/tramp" user-emacs-directory))
 
   ;; Set line-number-mode with relative numbering
-  (setq display-line-numbers-type 'relative)
+  ;; (setq display-line-numbers-type 'relative)
+  (setq display-line-numbers-type t)
   (add-hook 'prog-mode-hook #'display-line-numbers-mode)
   (add-hook 'text-mode-hook #'display-line-numbers-mode)
 
@@ -360,7 +361,10 @@
 ;; (set-face-attribute 'default nil :font "Iosevka NF" :height 200)
 ;; (set-face-attribute 'default nil :font "Iosevka NF")
 
-(defvar zt/default-font "Iosevka NF-20"
+(defvar zt/default-font
+  (if (>= (display-pixel-width) 3840)
+      "Iosevka NF-20"
+    "Iosevka NF-12")
   "My preferred default font for graphical Emacs frames.")
 
 (when (display-graphic-p)
@@ -391,19 +395,16 @@
 ;;   :diminish nil)
 
 (set-default-coding-systems 'utf-8)
-
-(use-package ripgrep)
-
 (blink-cursor-mode -1)
 (setq scroll-margin 5)
 (setq scroll-conservatively 100)
 
-;; (use-package dumb-jump
-;;   :config
-;;   (setq dumb-jump-force-searcher 'rg)
-;;   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-;;   (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-;;   )
+(use-package dumb-jump
+  :defer nil
+  :config
+  (setq dumb-jump-force-searcher 'rg)
+  (setq xref-backend-functions (remq 'etags--xref-backend xref-backend-functions))
+  (add-to-list 'xref-backend-functions #'dumb-jump-xref-activate t))
 
 (add-to-list 'auto-mode-alist '("\\.dsc" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.inf" . conf-mode))
@@ -451,14 +452,12 @@
 
 (when (eq system-type 'windows-nt)
   (setq browse-url-browser-function 'browse-url-generic
-        browse-url-generic-program "C:/Program Files/Google/Chrome/Application/chrome.exe")
-  )
+        browse-url-generic-program "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"))
 (when (eq system-type 'gnu/linux)
   (setq browse-url-browser-function 'browse-url-generic
         browse-url-generic-program (if (string-match-p "Windows" (getenv "PATH"))
                                        "/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
-                                     "thorium-browser"))
-  )
+                                     "thorium-browser")))
 
 (use-package async)
 
@@ -468,7 +467,7 @@
 ;; (when (eq system-type 'gnu/linux)
 ;;   (setq org-agenda-files '("/mnt/nas/org"))
 ;;   )
-(setq org-agenda-files '("/mnt/nas/org/agenda/"))
+;; (setq org-agenda-files '("/mnt/nas/org/agenda/"))
 
 
 (use-package yasnippet
@@ -500,39 +499,39 @@
 ;;  Loads users default shell PATH settings into Emacs. Usefull
 ;;  when calling Emacs directly from GUI systems.
 ;;
-(use-package emacs-solo-exec-path-from-shell
-  :ensure nil
-  :straight nil
-  :no-require t
-  :defer t
-  :init
-  (defun emacs-solo/set-exec-path-from-shell-PATH ()
-    "Set up Emacs' `exec-path' and PATH environment the same as the user's shell.
-This works with bash, zsh, or fish)."
-    (interactive)
-    (let* ((shell (getenv "SHELL"))
-           (shell-name (file-name-nondirectory shell))
-           (command
-            (cond
-             ((string= shell-name "fish")
-              "fish -c 'string join : $PATH'")
-             ((string= shell-name "zsh")
-              "zsh -i -c 'printenv PATH'")
-             ((string= shell-name "bash")
-              "bash --login -c 'echo $PATH'")
-             (t nil))))
-      (if (not command)
-          (message "emacs-solo: Unsupported shell: %s" shell-name)
-        (let ((path-from-shell
-               (replace-regexp-in-string
-                "[ \t\n]*$" ""
-                (shell-command-to-string command))))
-          (when (and path-from-shell (not (string= path-from-shell "")))
-            (setenv "PATH" path-from-shell)
-            (setq exec-path (split-string path-from-shell path-separator))
-            (message ">>> emacs-solo: PATH loaded from %s" shell-name))))))
+;; (use-package emacs-solo-exec-path-from-shell
+;;   :ensure nil
+;;   :straight nil
+;;   :no-require t
+;;   :defer t
+;;   :init
+;;   (defun emacs-solo/set-exec-path-from-shell-PATH ()
+;;     "Set up Emacs' `exec-path' and PATH environment the same as the user's shell.
+;; This works with bash, zsh, or fish)."
+;;     (interactive)
+;;     (let* ((shell (getenv "SHELL"))
+;;            (shell-name (file-name-nondirectory shell))
+;;            (command
+;;             (cond
+;;              ((string= shell-name "fish")
+;;               "fish -c 'string join : $PATH'")
+;;              ((string= shell-name "zsh")
+;;               "zsh -i -c 'printenv PATH'")
+;;              ((string= shell-name "bash")
+;;               "bash --login -c 'echo $PATH'")
+;;              (t nil))))
+;;       (if (not command)
+;;           (message "emacs-solo: Unsupported shell: %s" shell-name)
+;;         (let ((path-from-shell
+;;                (replace-regexp-in-string
+;;                 "[ \t\n]*$" ""
+;;                 (shell-command-to-string command))))
+;;           (when (and path-from-shell (not (string= path-from-shell "")))
+;;             (setenv "PATH" path-from-shell)
+;;             (setq exec-path (split-string path-from-shell path-separator))
+;;             (message ">>> emacs-solo: PATH loaded from %s" shell-name))))))
 
-  (add-hook 'after-init-hook #'emacs-solo/set-exec-path-from-shell-PATH))
+;;   (add-hook 'after-init-hook #'emacs-solo/set-exec-path-from-shell-PATH))
 
 
 ;;; │ ELECTRIC-PAIR
@@ -573,9 +572,9 @@ This works with bash, zsh, or fish)."
 (setq gnus-select-method
       '(nntp "news.gwene.org"))
 
-(use-package direnv
- :config
- (direnv-mode))
+;; (use-package direnv
+;;  :config
+;;  (direnv-mode))
 
 (use-package envrc
   :config
@@ -583,7 +582,10 @@ This works with bash, zsh, or fish)."
 
 (use-package rg
   :config
-  (rg-enable-default-bindings))
+  (rg-enable-default-bindings)
+  :custom
+  (rg-ignore-case 'smart)
+  (rg-command-line-flags '("--no-ignore")))
 
 (add-hook 'shell-mode-hook 'compilation-shell-minor-mode)
 (use-package capf-autosuggest
@@ -594,7 +596,7 @@ This works with bash, zsh, or fish)."
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'zt-themes)
 (require 'zt-icons)
-(require 'zt-lsp)
+;; (require 'zt-lsp)
 (require 'zt-treesit)
 (require 'zt-org)
 (require 'zt-minibuffer)
@@ -605,22 +607,44 @@ This works with bash, zsh, or fish)."
 (require 'zt-git)
 (require 'zt-custom-commands)
 (require 'zt-display-buffer-alist)
-;; (require 'zt-ai)
 (require 'zt-utils)
 (require 'zt-projects)
 (require 'zt-notes)
 (require 'zt-window)
 (require 'zt-highlight)
-(require 'zt-vc)
+;; (require 'zt-vc)
 (require 'zt-diff)
 (require 'zt-programming)
-
 ;; (require 'zt-eshell)
-;; (require 'zt-eglot) ;; zt-lsp has eglot currently
+(require 'zt-eglot) ;; zt-lsp has eglot currently
 
 ;; LOOK into jinx emacs packages
 (use-package multi-magit
   :straight
   (multi-magit :host github
                :repo "luismbo/multi-magit"
-               :branch "master"))
+               :branch "master")
+  :bind
+  ("C-x G" . multi-magit-status)
+  :config
+  (magit-add-section-hook 'magit-status-sections-hook
+                        'multi-magit-insert-repos-overview
+                         nil t))
+
+
+
+(setq magit-repository-directories
+      `(("~/code/McuWorkspace/McuPM-050-S32K3/src" . 3)
+      ("~/code/McuWorkspace/McuPM-050-S32K3/" . 1)))
+
+(use-package perfect-margin
+  :defer nil
+  :config
+  (perfect-margin-mode t))
+
+
+(use-package pdf-tools
+    :defer nil
+    :straight nil)
+
+(add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))

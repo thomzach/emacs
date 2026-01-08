@@ -5,6 +5,7 @@
 ;;
 ;;; Code:
 
+(setq package-enable-at-startup nil)
 
 (defcustom emacs-solo-avoid-flash-options
   '((enabled . t)
@@ -106,7 +107,6 @@ If reset values are nil, nothing is reset."
 (setq warning-minimum-level :error)
 (setq warning-suppress-types '((lexical-binding)))
 
-
 ;;;;; PACKAGE 
 
 (defvar bootstrap-version)
@@ -124,7 +124,6 @@ If reset values are nil, nothing is reset."
 
 ;; Use straight.el for use-package expressions
 (straight-use-package 'use-package)
-;; (straight-use-package 'org)
 (setq straight-use-package-by-default t)
 
 
