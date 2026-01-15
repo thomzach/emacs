@@ -363,7 +363,7 @@
 
 (defvar zt/default-font
   (if (>= (display-pixel-width) 3840)
-      "Iosevka NF-20"
+      "Iosevka NF-12"
     "Iosevka NF-12")
   "My preferred default font for graphical Emacs frames.")
 
@@ -428,8 +428,8 @@
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
 
-(add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-ts-mode))
+;; (add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c-ts-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.c\\'" . c-ts-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c-ts-mode))
 
@@ -481,7 +481,7 @@
 
 (use-package yasnippet-snippets)
 
-(setq c-set-offset 2)
+(setq c-set-offset 4)
 (setq-default tab-width 4)
 
 (setq-default indent-tabs-mode nil)
@@ -648,3 +648,16 @@
     :straight nil)
 
 (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
+
+(defun run-bash ()
+      (interactive)
+      (let ((shell-file-name "C:\\Program Files\\Git\\bin\\bash.exe"))
+            (shell "*bash*")))
+
+(let ((mingw64 "C:/msys64/mingw64/bin")
+      (msys2 "C:/msys64/usr/bin"))
+  ;; Add to Emacs exec-path
+  (add-to-list 'exec-path mingw64)
+  (add-to-list 'exec-path msys2)
+  ;; Prepend to PATH environment variable
+  (setenv "PATH" (concat mingw64 ";" msys2 ";" (getenv "PATH"))))

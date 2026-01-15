@@ -41,6 +41,16 @@
   :config
   (add-to-list 'treesit-language-source-alist '(c "https://github.com/tree-sitter/tree-sitter-c.git" "master" "src")))
 
+(setq c-ts-mode-indent-style 'bsd
+      c-ts-mode-indent-offset 4)
+
+;; (use-package c++-ts-mode
+;;   :straight nil
+;;   :mode "\\.cpp\\'"
+;;   :defer t
+;;   :config
+;;   (add-to-list 'treesit-language-source-alist '(cpp "https://github.com/tree-sitter/tree-sitter-cpp.git" "master" "src")))
+
 
 (add-to-list 'treesit-extra-load-path "C:/Users/zthomas/Languages")
 ;; https://github.com/emacs-tree-sitter/tree-sitter-langs
