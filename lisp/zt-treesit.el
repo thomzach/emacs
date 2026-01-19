@@ -39,10 +39,12 @@
   :mode "\\.c\\'"
   :defer t
   :config
-  (add-to-list 'treesit-language-source-alist '(c "https://github.com/tree-sitter/tree-sitter-c.git" "master" "src")))
+  (add-to-list 'treesit-language-source-alist '(c "https://github.com/tree-sitter/tree-sitter-c.git" "master" "src"))
+  (setq c-ts-mode-indent-style 'linux)
+  (setq c-ts-mode-indent-offset 4)
+  (setq indent-tabs-mode t))
 
-(setq c-ts-mode-indent-style 'bsd
-      c-ts-mode-indent-offset 4)
+
 
 ;; (use-package c++-ts-mode
 ;;   :straight nil
