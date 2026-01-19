@@ -661,3 +661,12 @@
   (add-to-list 'exec-path msys2)
   ;; Prepend to PATH environment variable
   (setenv "PATH" (concat mingw64 ";" msys2 ";" (getenv "PATH"))))
+
+
+(defun eshell/bash (&rest args)
+  "Run ARGS in Git Bash from Eshell and return output."
+  (let* ((bash "C:/Program Files/Git/bin/bash.exe")
+         (cmd  (mapconcat #'identity args " ")))
+    (with-temp-buffer
+      (process-file bash nil t nil "-lc" cmd)
+      (buffer-string))))
