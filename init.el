@@ -5,7 +5,6 @@
   ;; TAB cycle if there are only few candidates
   (setq completion-cycle-threshold 3)
   (setq cursor-type 'bar)
-  (setq tab-always-indent 'complete)
 
   (when (>= emacs-major-version 31)
     (tty-tip-mode nil))   ;; EMACS-31
@@ -126,7 +125,7 @@
   (split-height-threshold nil)
   (shr-use-colors nil)
   (switch-to-buffer-obey-display-actions t)
-  (tab-always-indent 'complete)
+  (tab-always-indent t)
   (tab-width 4)
   (transient-history-file (expand-file-name "cache/transient/history.el" user-emacs-directory))
   (transient-levels-file (expand-file-name "cache/transient/levels.el" user-emacs-directory))
@@ -485,7 +484,6 @@
 (setq-default tab-width 4)
 
 (setq-default indent-tabs-mode nil)
-(setq-default tab-always-indent 'complete)
 
 ;; (use-package virtualenvwrapper
 ;;   :ensure t
