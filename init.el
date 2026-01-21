@@ -670,3 +670,15 @@
     (with-temp-buffer
       (process-file bash nil t nil "-lc" cmd)
       (buffer-string))))
+
+(defun zt/clocktable-write (&rest args)
+  "Custom clocktable writer.
+Uses the default writer but shifts the first column right."
+  (apply #'org-clocktable-write-default args)
+  (save-excursion
+    (forward-char) ;; move into the first table field
+    (org-table-move-column-right)))
+
+(setq org-clock-clocktable-default-properties '(:maxlevel 2 :properties ("PROJECT") :formatter zt/clocktable-write))
+
+
