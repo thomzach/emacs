@@ -648,3 +648,4 @@
     :straight nil)
 
 (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
+;; test chaneg
