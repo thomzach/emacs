@@ -35,7 +35,8 @@
 (use-package denote-agenda
   :defer nil
   :config
-  (setq denote-agenda-include-regexp "_project")
+  (setq denote-agenda-include-regexp
+        "_\\(project\\|daily\\|journal\\)")  
   (denote-agenda-insinuate))
 
 

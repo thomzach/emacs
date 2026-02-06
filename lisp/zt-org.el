@@ -3,12 +3,25 @@
   :straight nil  
   :init
   (add-hook 'org-mode-hook #'visual-line-mode)
-  (add-hook 'org-mode-hook #'org-indent-mode)  
+  (add-hook 'org-mode-hook #'org-indent-mode)
+  (org-clock-persistence-insinuate)  
   :config
   (setq org-return-follows-link t)
   (setq org-directory "~/org/")
   (setq org-M-RET-may-split-line '((default . nil)))
-  (setq org-insert-heading-respect-content t))
+  (setq org-insert-heading-respect-content t)
+  (setq org-clock-persist t)
+  ;; (setq org-tags-exclude-from-inheritance '("journal"))
+  (setq org-agenda-span 'day)
+  (setq org-clock-rounding-minutes 30)
+  (setq org-agenda-time-grid
+      '((daily today require-timed)
+        ;; lines every 30 minutes
+        (800 1000 1200 1400 1600)
+        "......"
+        "----------------"))
+
+  )
 
 
 (global-set-key "\C-cl" 'org-store-link)
@@ -67,7 +80,7 @@
 	       "* %?\nEntered on %U\n  %i\n  %a")))
   )
 (setq shr-max-image-proportion 0.8)
-(setq org-agenda-span 21)
+;; (setq org-agenda-span 21)
 
 (setq org-deadline-warning-days 21)
 

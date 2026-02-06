@@ -671,9 +671,11 @@ Uses the default writer but shifts the first column right."
   (apply #'org-clocktable-write-default args)
   (save-excursion
     (forward-char) ;; move into the first table field
-    (org-table-move-column-right)))
+    (org-table-move-column-right)
+    (org-table-move-column-right)
+    ))
 
-(setq org-clock-clocktable-default-properties '(:maxlevel 2 :properties ("PROJECT") :formatter zt/clocktable-write))
+(setq org-clock-clocktable-default-properties '(:maxlevel 2 :tags t :formatter zt/clocktable-write))
 
 (defun zt/org-clock-in-at-time (start-time &optional no-clock-out)
   "Clock into current task starting at START-TIME.
@@ -697,3 +699,24 @@ With a single C-u prefix, only clock in (leave clock running)."
   :defer nil
   :init
   (gtags-mode 1))
+
+
+(use-package flyspell
+  :defer nil
+  :straight nil
+  :init
+  (setq flyspell-mode-map nil)  
+  (add-hook 'prog-mode-hook #'flyspell-prog-mode)
+  (add-hook 'org-mode-hook #'flyspell-mode)
+  :config
+
+  ;; Optional: make incorrect words underlined with a red wavy line
+  (set-face-attribute 'flyspell-incorrect nil
+                      :underline '(:color "red" :style wave))
+
+  ;; Optional: set Aspell path (Windows + MinGW example)
+  (setq ispell-program-name "C:/msys64/mingw64/bin/aspell.exe")
+  (setq ispell-dictionary "english"))
+
+
+
