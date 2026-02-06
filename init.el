@@ -398,13 +398,6 @@
 (setq scroll-margin 5)
 (setq scroll-conservatively 100)
 
-(use-package dumb-jump
-  :defer nil
-  :config
-  (setq dumb-jump-force-searcher 'rg)
-  (setq xref-backend-functions (remq 'etags--xref-backend xref-backend-functions))
-  (add-to-list 'xref-backend-functions #'dumb-jump-xref-activate t))
-
 (add-to-list 'auto-mode-alist '("\\.dsc" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.inf" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.dec" . conf-mode))
@@ -612,7 +605,6 @@
 (require 'zt-highlight)
 ;; (require 'zt-vc)
 (require 'zt-diff)
-(require 'zt-programming)
 ;; (require 'zt-eshell)
 (require 'zt-eglot) ;; zt-lsp has eglot currently
 
@@ -632,8 +624,8 @@
 
 
 (setq magit-repository-directories
-      `(("~/code/McuWorkspace/McuPM-050-S32K3/src" . 3)
-      ("~/code/McuWorkspace/McuPM-050-S32K3/" . 1)))
+      `(("~/code/workspace-test/McuPM_050_S32K3/McuPM_050_S32K3/src" . 3)
+      ("~/code/workspace-test/McuPM_050_S32K3/McuPM_050_S32K3/" . 1)))
 
 (use-package perfect-margin
   :defer nil
@@ -653,10 +645,14 @@
             (shell "*bash*")))
 
 (let ((mingw64 "C:/msys64/mingw64/bin")
-      (msys2 "C:/msys64/usr/bin"))
+      (msys2 "C:/msys64/usr/bin")
+      (user-bin "C:/Users/zthomas/bin")
+      (clangd "C:/Users/zthomas/bin/clangd_21.1.8/bin"))
   ;; Add to Emacs exec-path
   (add-to-list 'exec-path mingw64)
   (add-to-list 'exec-path msys2)
+  (add-to-list 'exec-path user-bin)
+  (add-to-list 'exec-path clangd)
   ;; Prepend to PATH environment variable
   (setenv "PATH" (concat mingw64 ";" msys2 ";" (getenv "PATH"))))
 
@@ -679,4 +675,26 @@ Uses the default writer but shifts the first column right."
 
 (setq org-clock-clocktable-default-properties '(:maxlevel 2 :properties ("PROJECT") :formatter zt/clocktable-write))
 
+(defun zt/org-clock-in-at-time (start-time &optional no-clock-out)
+  "Clock into current task starting at START-TIME.
+
+With no prefix arg, also prompt for a clock-out time and clock out immediately.
+With a single C-u prefix, only clock in (leave clock running)."
+  (interactive
+   (list
+    (org-read-date t t nil "Clock in time: ")
+    current-prefix-arg))
+  ;; clock in at START-TIME
+  (org-clock-in nil start-time)
+  ;; unless C-u was used, also clock out
+  (unless no-clock-out
+    (let ((end-time (org-read-date t t nil "Clock out time: ")))
+      (org-clock-out nil nil end-time))))
+
+(remove-hook 'xref-backend-functions #'etags--xref-backend)
+
+(use-package gtags-mode
+  :defer nil
+  :init
+  (gtags-mode 1))
 

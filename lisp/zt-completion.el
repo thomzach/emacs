@@ -85,6 +85,8 @@
   (add-to-list 'completion-at-point-functions #'cape-abbrev)
   ;;(add-to-list 'completion-at-point-functions #'cape-dict)
   (add-to-list 'completion-at-point-functions #'cape-line)
+  (add-to-list 'completion-at-point-functions
+               (cape-company-to-capf #'company-gtags))  
   )
 
 
