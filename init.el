@@ -698,3 +698,27 @@ With a single C-u prefix, only clock in (leave clock running)."
   :init
   (gtags-mode 1))
 
+
+;; ;; These are the defaults we want to change.  We do so in the
+;; ;; following `use-package' declaration.
+;; (setq org-M-RET-may-split-line '((default . t)))
+;; (setq org-insert-heading-respect-content nil)
+;; (setq org-log-done nil)
+;; (setq org-log-into-drawer nil)
+
+
+;; (use-package org
+;;   :ensure nil ; do not try to install it as it is built-in
+;;   :config
+;;   (setq org-M-RET-may-split-line '((default . nil)))
+;;   (setq org-insert-heading-respect-content t)
+;;   (setq org-log-done 'time)
+;;   (setq org-log-into-drawer t)
+
+;;   (setq org-directory "/tmp/testing-org/")
+;;   (setq org-agenda-files (list org-directory))
+
+;;   ;; Learn about the ! and more by reading the relevant section of the
+;;   ;; Org manual.  Evaluate: (info "(org) Tracking TODO state changes")
+;;   (setq org-todo-keywords
+;;         '((sequence "TODO(t)" "WAIT(w!)" "|" "CANCEL(c!)" "DONE(d!)"))))
