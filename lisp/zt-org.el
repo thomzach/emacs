@@ -6,7 +6,9 @@
   (add-hook 'org-mode-hook #'org-indent-mode)  
   :config
   (setq org-return-follows-link t)
-  (setq org-directory "~/org/"))
+  (setq org-directory "~/org/")
+  (setq org-M-RET-may-split-line '((default . nil)))
+  (setq org-insert-heading-respect-content t))
 
 
 (global-set-key "\C-cl" 'org-store-link)
