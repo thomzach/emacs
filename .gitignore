@@ -4,3 +4,14 @@ straight/
 cache/
 eln-cache/
 elpa/
+.cache/
+.mc-lists.el
+.org-id-locations
+custom-vars.el
+eshell/
+mason/
+org-clock-save.el
+org-persist/
+projectile-bookmarks.eld
+server/
+var/
