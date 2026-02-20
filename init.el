@@ -675,7 +675,7 @@ Uses the default writer but shifts the first column right."
     (org-table-move-column-right)
     ))
 
-(setq org-clock-clocktable-default-properties '(:maxlevel 2 :tags t :formatter zt/clocktable-write))
+(setq org-clock-clocktable-default-properties '(:scope file :maxlevel 2))
 
 (defun zt/org-clock-in-at-time (start-time &optional no-clock-out)
   "Clock into current task starting at START-TIME.
@@ -718,5 +718,39 @@ With a single C-u prefix, only clock in (leave clock running)."
   (setq ispell-program-name "C:/msys64/mingw64/bin/aspell.exe")
   (setq ispell-dictionary "english"))
 
+(use-package pulsar
+  :ensure t
+  :bind
+  ( :map global-map
+    ("C-x l" . pulsar-pulse-line) ; overrides `count-lines-page'
+    ("C-x L" . pulsar-highlight-permanently-dwim)) ; or use `pulsar-highlight-temporarily-dwim'
+  :init
+  (pulsar-global-mode 1)
+  :config
+  (setq pulsar-delay 0.055)
+  (setq pulsar-iterations 5)
+  (setq pulsar-face 'pulsar-green)
+  (setq pulsar-region-face 'pulsar-green)
+  (setq pulsar-highlight-face 'pulsar-green))
 
+;; (use-package perspective
+;;   :bind
+;;   ("C-x C-b" . persp-list-buffers)         ; or use a nicer switcher, see below
+;;   :custom
+;;   (persp-mode-prefix-key (kbd "C-c M-p"))  ; pick your own prefix key here
+;;   :init
+;;   (persp-mode))
 
+(use-package flash
+  :straight
+  (flash :host github
+         :repo "Prgebish/flash"
+         :branch "main")
+  :custom
+  (flash-multi-window t)
+  (flash-rainbow t)
+  (flash-label-position 'after)
+  :config
+  (require 'flash-isearch)
+  (flash-isearch-mode 1)  
+  )
