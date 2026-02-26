@@ -21,16 +21,18 @@
   :hook (calendar-mode . denote-journal-calendar-mode)
   :bind
   (("C-c n d" . denote-journal-new-or-existing-entry))
+  :custom
+  (denote-journal-interval 'monthly)
   :config
   ;; Use the "journal" subdirectory of the `denote-directory'.  Set this
   ;; to nil to use the `denote-directory' instead.
   (setq denote-journal-directory
-        (expand-file-name "journal" denote-directory))
+        (expand-file-name "journal/monthly" denote-directory))
   ;; Default keyword for new journal entries. It can also be a list of
   ;; strings.
   (setq denote-journal-keyword "journal")
   ;; Read the doc string of `denote-journal-title-format'.
-  (setq denote-journal-title-format 'day-date-month-year))
+  (setq denote-journal-title-format "%B %Y"))
 
 (use-package denote-agenda
   :defer nil
