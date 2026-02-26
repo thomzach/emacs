@@ -617,6 +617,10 @@
                :branch "master")
   :bind
   ("C-x G" . multi-magit-status)
+  :custom
+  (magit-repository-directories `(
+                                  ("~/code/McuWorkspace/" . 4)
+                                  ))
   :config
   (magit-add-section-hook 'magit-status-sections-hook
                         'multi-magit-insert-repos-overview
@@ -624,19 +628,20 @@
 
 
 
-(setq magit-repository-directories
-      `(("~/code/workspace-test/McuPM_050_S32K3/McuPM_050_S32K3/src" . 3)
-      ("~/code/workspace-test/McuPM_050_S32K3/McuPM_050_S32K3/" . 1)))
-
 (use-package perfect-margin
   :defer nil
   :config
   (perfect-margin-mode t))
 
-
 (use-package pdf-tools
-    :defer nil
-    :straight nil)
+  :defer nil
+  :config
+  (pdf-tools-install t) ;; compile binaries
+  (setq pdf-view-use-imagemagick t)
+  (setq pdf-view-midnight-colors '("white" . "black"))
+  (add-hook 'pdf-view-mode-hook
+            (lambda ()
+              (pdf-view-midnight-minor-mode 1))))
 
 (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
 
@@ -742,16 +747,17 @@ With a single C-u prefix, only clock in (leave clock running)."
 ;;   :init
 ;;   (persp-mode))
 
-(use-package flash
-  :straight
-  (flash :host github
-         :repo "Prgebish/flash"
-         :branch "main")
-  :custom
-  (flash-multi-window t)
-  (flash-rainbow t)
-  (flash-label-position 'after)
-  :config
-  (require 'flash-isearch)
-  (flash-isearch-mode 1)  
-  )
+(defun zt/org-clock-get-file-title ()
+  "Return the current Org file's #+TITLE or fallback to filename."
+  (let* ((title (org-collect-keywords '("title")))
+         (title-text (caar (cdr (assoc "title" title))))) ;; extract string
+    (or title-text (file-name-base (buffer-file-name)))))
+
+(setq org-clock-heading-function #'zt/org-clock-get-file-title)
+
+;Clear the eshell buffer.
+(defun eshell/clear ()      
+   (let ((eshell-buffer-maximum-lines 0)) (eshell-truncate-buffer)))
+
+(setq org-refile-targets
+      '((org-agenda-files :maxlevel . 2)))
