@@ -46,6 +46,7 @@
    ("C-x C-k RET" . nil)
    ("C-M-z" . delete-pair)
    ("C-M-." . rg-dwim-project-dir)
+   ("C-c o" . occur)
    )
   :custom
   (treesit-font-lock-level 4)
