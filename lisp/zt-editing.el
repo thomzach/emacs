@@ -23,11 +23,26 @@
 (global-set-key (kbd "M-i") 'imenu)
 
 
-(use-package avy
-  :ensure t
-  :bind ("M-s" . avy-goto-char-timer)
+;; (use-package avy
+;;   :ensure t
+;;   :bind ("M-s" . avy-goto-char-timer)
+;;   :config
+;;   (setq avy-timeout-seconds 1)
+;;   )
+
+(use-package flash
+  :defer nil
+  :straight
+  (flash :host github
+         :repo "Prgebish/flash"
+         :branch "main")
+  :custom
+  (flash-multi-window t)
+  (flash-rainbow t)
+  (flash-label-position 'overlay)
   :config
-  (setq avy-timeout-seconds 1)
+  (require 'flash-isearch)
+  (flash-isearch-mode 1)  
   )
 
 (use-package move-text
