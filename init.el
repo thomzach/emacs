@@ -175,42 +175,11 @@
     "d" #'delete-frame)
   (put 'other-frame 'repeat-map 'frame-repeat-map)
 
-  ;; ;; Setup preferred fonts when present on System
-  ;; (defun emacs-solo/setup-font ()
-  ;;   (let* ((emacs-solo-have-default-font (find-font (font-spec :family emacs-solo-preferred-font-name)))
-  ;;          (size (nth (if (eq system-type 'darwin) 0 1)
-  ;;                     emacs-solo-preferred-font-sizes)))
-  ;;     (set-face-attribute 'default nil
-  ;;                         :family (when emacs-solo-have-default-font
-  ;;                                   emacs-solo-preferred-font-name)
-  ;;                         :height size)
-
-  ;;     ;; macOS specific fine-tuning
-  ;;     (when (and (eq system-type 'darwin) emacs-solo-have-default-font)
-  ;;       ;; Glyphs for powerline/icons
-  ;;       (set-fontset-font t '(#xe0b0 . #xe0bF) (font-spec :family emacs-solo-preferred-font-name))
-  ;;       ;; Emojis
-  ;;       (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji") nil 'append)
-  ;;       (add-to-list 'face-font-rescale-alist '("Apple Color Emoji" . 0.8)))))
-
-  ;; ;; Load Preferred Font Setup
-  ;; (when emacs-solo-enable-preferred-font
-  ;;   (emacs-solo/setup-font))
-
-  
   ;; We want auto-save, but no #file# cluterring, so everything goes under our config cache/
   (make-directory (expand-file-name "cache/auto-saves/" user-emacs-directory) t)
   (setq auto-save-list-file-prefix (expand-file-name "cache/auto-saves/sessions/" user-emacs-directory)
         auto-save-file-name-transforms `((".*" ,(expand-file-name "cache/auto-saves/" user-emacs-directory) t)))
-
-  ;; ;; TERMs should use the entire window space
-  ;; (defun emacs-solo/disable-global-scrolling-in-ansi-term ()
-  ;;   "Disable global scrolling behavior in ansi-term buffers."
-  ;;   (setq-local scroll-conservatively 101)
-  ;;   (setq-local scroll-margin 0)
-  ;;   (setq-local scroll-step 0))
-  ;; (add-hook 'term-mode-hook #'emacs-solo/disable-global-scrolling-in-ansi-term)
-
+ 
   ;; TRAMP specific HACKs
   ;; See https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
   (connection-local-set-profile-variables
@@ -386,14 +355,6 @@
 (use-package diredfl
   :hook (dired-mode . diredfl-mode))
 
-;; (use-package recentf
-;;   :config
-;;   (setq recentf-auto-cleanup 'never
-;;         recentf-max-saved-items 1000
-;;         recentf-save-file (concat user-emacs-directory ".recentf"))
-;;   (recentf-mode t)
-;;   :diminish nil)
-
 (set-default-coding-systems 'utf-8)
 (blink-cursor-mode -1)
 (setq scroll-margin 5)
@@ -454,15 +415,6 @@
 
 (use-package async)
 
-;; (when (eq system-type 'windows-nt)
-;;   (setq org-agenda-files '("H:/zthomas/private/org"))
-;;   )
-;; (when (eq system-type 'gnu/linux)
-;;   (setq org-agenda-files '("/mnt/nas/org"))
-;;   )
-;; (setq org-agenda-files '("/mnt/nas/org/agenda/"))
-
-
 (use-package yasnippet
   :ensure t
   :hook ((text-mode
@@ -485,46 +437,6 @@
 ;;   (venv-initialize-interactive-shells)
 ;;   (venv-initialize-eshell)
 ;;   )
-
-;;; │ EMACS-SOLO-EXEC-PATH-FROM-SHELL
-;;
-;;  Loads users default shell PATH settings into Emacs. Usefull
-;;  when calling Emacs directly from GUI systems.
-;;
-;; (use-package emacs-solo-exec-path-from-shell
-;;   :ensure nil
-;;   :straight nil
-;;   :no-require t
-;;   :defer t
-;;   :init
-;;   (defun emacs-solo/set-exec-path-from-shell-PATH ()
-;;     "Set up Emacs' `exec-path' and PATH environment the same as the user's shell.
-;; This works with bash, zsh, or fish)."
-;;     (interactive)
-;;     (let* ((shell (getenv "SHELL"))
-;;            (shell-name (file-name-nondirectory shell))
-;;            (command
-;;             (cond
-;;              ((string= shell-name "fish")
-;;               "fish -c 'string join : $PATH'")
-;;              ((string= shell-name "zsh")
-;;               "zsh -i -c 'printenv PATH'")
-;;              ((string= shell-name "bash")
-;;               "bash --login -c 'echo $PATH'")
-;;              (t nil))))
-;;       (if (not command)
-;;           (message "emacs-solo: Unsupported shell: %s" shell-name)
-;;         (let ((path-from-shell
-;;                (replace-regexp-in-string
-;;                 "[ \t\n]*$" ""
-;;                 (shell-command-to-string command))))
-;;           (when (and path-from-shell (not (string= path-from-shell "")))
-;;             (setenv "PATH" path-from-shell)
-;;             (setq exec-path (split-string path-from-shell path-separator))
-;;             (message ">>> emacs-solo: PATH loaded from %s" shell-name))))))
-
-;;   (add-hook 'after-init-hook #'emacs-solo/set-exec-path-from-shell-PATH))
-
 
 ;;; │ ELECTRIC-PAIR
 ;; Adds closing brackets
