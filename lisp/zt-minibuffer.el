@@ -25,7 +25,8 @@
   :bind
   (
       ("C-x b" . consult-buffer)
-   ))
-
+      ("M-g g" . consult-goto-line)
+      ("C-s" . consult-line)
+      ("C-r" . consult-line)))
 
 (provide 'zt-minibuffer)
