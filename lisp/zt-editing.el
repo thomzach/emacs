@@ -13,12 +13,20 @@
   ))
 
 
-(use-package expand-region
-  :bind
-  (
-   ("M-'" . er/expand-region)
-   ("M-\"" . er/contract-region)
-   ))
+;; (use-package expand-region
+;;   :bind
+;;   (
+;;    ("M-'" . er/expand-region)
+;;    ("M-\"" . er/contract-region)
+;;    ))
+
+(use-package expreg
+  :ensure t
+  :bind (
+   ("M-'" . expreg-expand)
+   ("M-\"" . expreg-contract)
+         ))
+
 
 (global-set-key (kbd "M-i") 'imenu)
 
@@ -40,9 +48,11 @@
   (flash-multi-window t)
   (flash-rainbow t)
   (flash-label-position 'overlay)
+  :bind
+  ("M-s" . flash-jump)
   :config
-  (require 'flash-isearch)
-  (flash-isearch-mode 1)  
+  ;; (require 'flash-isearch)
+  ;; (flash-isearch-mode 1)  
   )
 
 (use-package move-text
