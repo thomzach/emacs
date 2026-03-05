@@ -4,13 +4,17 @@
   :init
   (add-hook 'org-mode-hook #'visual-line-mode)
   (add-hook 'org-mode-hook #'org-indent-mode)
-  (org-clock-persistence-insinuate)  
+  (org-clock-persistence-insinuate)
+  :bind
+  (:map org-mode-map
+        ("C-," . nil))  
   :config
   (setq org-return-follows-link t)
+  (setq org-clock-idle-time 15)
   (setq org-directory "~/org/")
   (setq org-M-RET-may-split-line '((default . nil)))
   (setq org-insert-heading-respect-content t)
-  (setq org-clock-persist t)
+  (setq org-clock-persist 'history)
   ;; (setq org-tags-exclude-from-inheritance '("journal"))
   (setq org-agenda-span 'day)
   (setq org-clock-rounding-minutes 30)
@@ -65,20 +69,22 @@
 
 (setq org-todo-keywords
       '((sequence "TODO" "WAITING" "|" "DONE" )))
-(when (eq system-type 'windows-nt)
-  (setq org-capture-templates
-	    '(("t" "Todo" entry (file+headline "H:/zthomas/private/org/GTD.org" "Tasks")
-	       "* TODO %?\n  %i\n")
-	      ("j" "Journal" entry (file+datetree "h:/zthomas/private/org/journal.org")
-	       "* %?\nEntered on %U\n  %i\n  %a")))
-  )
-(when (eq system-type 'gnu/linux)
-  (setq org-capture-templates
-	    '(("t" "Todo" entry (file+headline "/mnt/nas/org/GTD.org" "Tasks")
-	       "* TODO %?\n  %i\n")
-	      ("j" "Journal" entry (file+datetree "/mnt/nas/org/journal.org")
-	       "* %?\nEntered on %U\n  %i\n  %a")))
-  )
+
+;; (when (eq system-type 'windows-nt)
+;;   (setq org-capture-templates
+;; 	    '(("t" "Todo" entry (file+headline "H:/zthomas/private/org/GTD.org" "Tasks")
+;; 	       "* TODO %?\n  %i\n")
+;; 	      ("j" "Journal" entry (file+datetree "h:/zthomas/private/org/journal.org")
+;; 	       "* %?\nEntered on %U\n  %i\n  %a")))
+;;   )
+;; (when (eq system-type 'gnu/linux)
+;;   (setq org-capture-templates
+;; 	    '(("t" "Todo" entry (file+headline "/mnt/nas/org/GTD.org" "Tasks")
+;; 	       "* TODO %?\n  %i\n")
+;; 	      ("j" "Journal" entry (file+datetree "/mnt/nas/org/journal.org")
+;; 	       "* %?\nEntered on %U\n  %i\n  %a")))
+;;   )
+
 (setq shr-max-image-proportion 0.8)
 ;; (setq org-agenda-span 21)
 
