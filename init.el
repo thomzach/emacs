@@ -593,7 +593,7 @@ Uses the default writer but shifts the first column right."
     (org-table-move-column-right)
     ))
 
-(setq org-clock-clocktable-default-properties '(:scope file :maxlevel 2))
+(setq org-clock-clocktable-default-properties '( :scope agenda :block today :match "project" :maxlevel 1 :fileskip0 t :properties ("CATEGORY") :compact t))
 
 (defun zt/org-clock-in-at-time (start-time &optional no-clock-out)
   "Clock into current task starting at START-TIME.
