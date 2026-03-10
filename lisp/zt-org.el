@@ -10,7 +10,7 @@
         ("C-," . nil))  
   :config
   (setq org-return-follows-link t)
-  (setq org-clock-idle-time 15)
+  (setq org-clock-idle-time nil)
   (setq org-directory "~/org/")
   (setq org-M-RET-may-split-line '((default . nil)))
   (setq org-insert-heading-respect-content t)
