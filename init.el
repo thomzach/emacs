@@ -443,13 +443,22 @@
 ;;   (venv-initialize-eshell)
 ;;   )
 
-;;; │ ELECTRIC-PAIR
-;; Adds closing brackets
-(use-package electric-pair
-  :ensure nil
-  :straight nil
-  :defer
-  :hook (after-init-hook . electric-pair-mode))
+;; ;;; │ ELECTRIC-PAIR
+;; ;; Adds closing brackets
+;; (use-package electric-pair
+;;   :ensure nil
+;;   :straight nil
+;;   :defer
+;;   :hook (after-init-hook . electric-pair-mode))
+
+(use-package smartparens
+  :defer nil  
+  :ensure smartparens  ;; install the package
+  :hook (prog-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
+  :config
+  ;; load default config
+  (require 'smartparens-config))
+(smartparens-global-mode 1)
 
 ;;; │ PAREN
 ;; Shows matching parthesis
