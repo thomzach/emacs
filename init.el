@@ -330,9 +330,14 @@
 ;; (set-face-attribute 'default nil :font "Iosevka NF" :height 200)
 ;; (set-face-attribute 'default nil :font "Iosevka NF")
 
+(defun zt/monitor-width ()
+  (let* ((attrs (frame-monitor-attributes))
+         (geom  (alist-get 'geometry attrs)))
+    (nth 2 geom)))
+
 (defvar zt/default-font
-  (if (>= (display-pixel-width) 3840)
-      "Iosevka NF-12"
+  (if (>= (zt/monitor-width) 3840)
+      "Iosevka NF-20"
     "Iosevka NF-12")
   "My preferred default font for graphical Emacs frames.")
 
